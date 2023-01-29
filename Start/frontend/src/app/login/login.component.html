@@ -1,0 +1,207 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<div class="container">
+    <div class="header">
+        <nav>
+            <a routerLink="/login" routerLinkActive="active">Pocetni ekran</a>
+            <a routerLink="" routerLinkActive="login" style="float: right;">Izloguj se</a>
+            <span style="float: right;">LOGIN</span>
+        </nav>
+    </div>
+    <div class="content">
+        <body>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 col-sm-12">
+                        <table class="table">
+                            <tr>
+                                <td>Korisnicko ime: </td>
+                                <td>
+                                    <input type="text" name="username" [(ngModel)]="username">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lozinka: </td>
+                                <td>
+                                    <input type="password" name="lPassword" [(ngModel)]="password">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button class="btn btn-success" (click)="login()">Logovanje</button>
+                                </td>
+                            </tr>
+                            <tr style="text-align: rightleft;">
+                                <td colspan="2">
+                                    Nemas Nalog? Registruj se <a href="register">ovde</a>.
+                                    <form>
+                                        <button (click)="func()" class="btn">novi pass</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span style="color:red">{{error}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 col-sm-12">
+                        <table class="table" *ngIf="shreg">
+                            <tr>
+                                <td>Ime: </td>
+                                <td>
+                                    <input type="text" name="rName" [(ngModel)]="rName">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Prezime: </td>
+                                <td>
+                                    <input type="text" name="rLastname" [(ngModel)]="rLastname">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Korisnicko ime: </td>
+                                <td>
+                                    <input type="text" name="rUsername" [(ngModel)]="rUsername">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lozinka: </td>
+                                <td>
+                                    <input type="password" name="rPassword" [(ngModel)]="rPassword" id="rPassword">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Ponovljena lozinka: </td>
+                                <td>
+                                    <input type="password" name="rPPassword" [(ngModel)]="rPPassword">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Grad: </td>
+                                <td>
+                                    <select name="rCity" [(ngModel)]="rCity">
+                                        <option *ngFor="let g of svigradovi" value='{{g.naziv}}'>{{g.naziv}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Datum rodjenja: </td>
+                                <td>
+                                    <input type="date" name="rDatum" [(ngModel)]="rDatum">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Kontakt telefon: </td>
+                                <td>
+                                    <input type="tel" name="rTelefon" [(ngModel)]="rTelefon" placeholder="xxx/xxx-xxx"
+                                        pattern="[0-9]{3}/[0-9]{3}-[0-9]{3}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mejl: </td>
+                                <td>
+                                    <input type="email" name="rMejl" [(ngModel)]="rMejl">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tip korisnika: </td>
+                                <td>
+                                    <select name="rTip" [(ngModel)]="rTip">
+                                        <option value="kupac" name="rTip">kupac</option>
+                                        <option value="prodavac" name="rTip">prodavac</option>
+                                        <option value="agent" name="rTip">agent</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr *ngIf="rTip.localeCompare('agent')==0">
+                                <td>Agencija: </td>
+                                <td>
+                                    <select [(ngModel)]="rAgencija">
+                                        <option *ngFor="let a of sveagencije" value='{{a.naziv}}' name="rAgencija">{{a.naziv}}
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr *ngIf="rTip.localeCompare('agent')==0">
+                                <td>Broj licence: </td>
+                                <td>
+                                    <input type="text" name="rBr" [(ngModel)]="rBr">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <br />
+                                    <span style="font: bold;" class="porukacaptcha">{{captcha}}</span><br />
+                                    <input id="textBox" type="text" name="text" [(ngModel)]="rcaptcha">
+                                    <input type="checkbox" [(ngModel)]="check"><br />
+                                    <button class="btn btn-outline-success" (click)="refreshCaptcha()">Osvezi</button>
+                                </td>
+        
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button class="btn btn-success" (click)="dalje()">Dalje</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span id="rmessage" style="color:red">{{rmessage}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div> -->
+                <br />
+                <!-- <div class="row" *ngIf="svenekretnine">
+                    <div class="col-lg-1 col-sm-1"></div>
+                    <div class="col-lg-2 col-md-12 col-sm-10" *ngFor="let n of svenekretnine;index as i;">
+                        <div class="card border-success" *ngIf="i<5" style="text-align: center; height: 400px;">
+                            <div *ngFor="let ss of zaprikazati;index as j;">
+                                <a (click)="slika(n)"><img *ngIf="i==j" src="../../assets/nekretnine/{{ss}}.jpg"
+                                        style="width:100%; height: 200px;"></a>
+                            </div>
+                            <div class="card-body" style="text-align: center;">
+                                <h5>{{n.naziv}}</h5>
+                                <p>{{n.cena}} e</p>
+                                <div class="row">Linije prevoza: <div class="col-10" *ngFor="let l of n.linije">{{l}} </div>
+                                </div>
+                                <p *ngIf="n.mesec_prodaje!=0">PRODATO</p>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-sm-1"></div>
+        
+                </div> -->
+            </div>
+        
+        
+        
+        
+        </body>
+    </div>
+    <div class="footer">
+        <h5 ><i>LAZAR ERIC - PIA PROJEKAT</i></h5>
+    </div>
+</div>
+
+
+
+</html>

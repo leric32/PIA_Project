@@ -1,0 +1,116 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <h2 style="text-align: center;">Registrovanje Admina</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 col-sm-12">
+                <table class="table">
+                    <tr>
+                        <td>
+                            Registrovanje administratora: <input type="checkbox" id="adm" name="adm" [(ngModel)]="adm">
+                        </td>
+                        <td>
+                            Dodavanje organizatora: <input type="checkbox" id="org" name="org" [(ngModel)]="org">
+                        </td>
+                    </tr>
+                    <tr *ngIf="adm || org">
+                        <td>Ime: </td>
+                        <td>
+                            <input type="text" name="ime" [(ngModel)]="ime" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="adm || org">
+                        <td>Prezime: </td>
+                        <td>
+                            <input type="text" name="prezime" [(ngModel)]="prezime" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="adm || org">
+                        <td>Korisnicko Ime: </td>
+                        <td>
+                            <input type="text" name="kor_ime" [(ngModel)]="kor_ime" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="adm || org">
+                        <td>Lozinka: </td>
+                        <td>
+                            <input type="password" name="lozinka" [(ngModel)]="lozinka" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="adm || org">
+                        <td>Potvrda lozinke: </td>
+                        <td>
+                            <input type="password" name="lozinka2" [(ngModel)]="lozinka2" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="adm || org">
+                        <td>Kontakt telefon: </td>
+                        <td>
+                            <input type="text" name="tel" [(ngModel)]="tel" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="adm || org">
+                        <td>Email: </td>
+                        <td>
+                            <input type="text" name="email" [(ngModel)]="email" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="org">
+                        <td>Naziv organizacije: </td>
+                        <td>
+                            <input type="text" name="tel" [(ngModel)]="naz_org" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="org">
+                        <td>Adresa organizacije: </td>
+                        <td>
+                            <input type="text" name="email" [(ngModel)]="adr_org" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="org">
+                        <td>Maticni broj organizacije: </td>
+                        <td>
+                            <input type="number" name="email" [(ngModel)]="broj_org" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="adm || org">
+                        <td>Slika: </td>
+                        <td>
+                            <input type="file" id="image" name="image" value="">
+                        </td>
+                    </tr>
+                    <tr *ngIf="adm">
+                        <td colspan="2">
+                            <form>
+                                <button class="btn btn-success" (click)="register_admin()">Registrovanje</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr *ngIf="org">
+                        <td colspan="2">
+                            <form>
+                                <button class="btn btn-success" (click)="dodaj()">Dodaj</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span style="color:red">{{error}}</span>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</body>

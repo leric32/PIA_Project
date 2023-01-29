@@ -1,0 +1,124 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<div class="container">
+    <div class="header">
+        <nav>
+            <a (click)="izabrao(1)">Svi korisnici</a>
+            <a (click)="izabrao(2)">Sve radionice</a>
+            <a routerLink="" routerLinkActive="login" style="float: right;">Izloguj se</a>
+            <span style="float: right;">ADMIN: {{ulogovan.ime}} {{ulogovan.prezime}}</span>
+        </nav>
+    </div>
+    <div class="content">
+        <div class="row" *ngIf="kor == true">
+            <div class="col-md-12 col-sm-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Ime</th>
+                            <th>Prezime</th>
+                            <th>Korisnicko ime</th>
+                            <th>Lozinka</th>
+                            <th>Telefon</th>
+                            <th>Email</th>
+                            <th>Tip</th>
+                            <th>Organizacija</th>
+                            <th>Adresa Organizacije</th>
+                            <th>Maticni Broj Organizacije</th>
+                            <th>Status</th>
+                            <th>Azuriraj</th>
+                            <th>Obrisi</th>
+                            <th>Prihvatanje Zahteva</th>
+                            <th>Odbijanje Zahteva</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let k of korisnici">
+                            <td *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime">{{k.ime}}</td>
+                            <td *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime">
+                                <input type="text" name="ime" [(ngModel)]="ime" placeholder={{k.ime}}>
+                            </td>
+                            <td *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime">{{k.prezime}}</td>
+                            <td *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime">
+                                <input type="text" name="prezime" [(ngModel)]="prezime" placeholder={{k.prezime}}>
+                            </td>
+                            <td *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime">{{k.korisnicko_ime}}
+                            </td>
+                            <td *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime">
+                                <input type="text" name="korisnicko_ime" [(ngModel)]="korisnicko_ime"
+                                    placeholder={{k.korisnicko_ime}}>
+                            </td>
+                            <td *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime">{{k.lozinka}}</td>
+                            <td *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime">
+                                <input type="text" name="lozinka" [(ngModel)]="lozinka" placeholder={{k.lozinka}}>
+                            </td>
+                            <td *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime">{{k.tel}}</td>
+                            <td *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime">
+                                <input type="number" name="tel" [(ngModel)]="tel" placeholder={{k.tel}}>
+                            </td>
+                            <td *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime">{{k.email}}</td>
+                            <td *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime">
+                                <input type="number" name="email" [(ngModel)]="email" placeholder={{k.email}}>
+                            </td>
+                            <td *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime">{{k.tip}}</td>
+                            <td *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime">
+                                <select name="tip" [(ngModel)]="tip">
+                                    <option disabled selected value> -- select an option -- </option>
+                                    <option value="ucesnik">ucesnik</option>
+                                    <option value="organizator">organizator</option>
+                                </select>
+                            </td>
+                            <td *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime">{{k.organizacija}}
+                            </td>
+                            <td *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime">
+                                <input type="text" name="organizacija" [(ngModel)]="organizacija"
+                                    placeholder={{k.organizacija}} [disabled]="tip != 'organizator'">
+                            </td>
+                            <td *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime">{{k.adresa_org}}</td>
+                            <td *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime">
+                                <input type="text" name="adresa_org" [(ngModel)]="adresa_org"
+                                    placeholder={{k.adresa_org}} [disabled]="tip != 'organizator'">
+                            </td>
+                            <td *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime">{{k.broj_org}}</td>
+                            <td *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime">
+                                <input type="number" name="broj_org" [(ngModel)]="broj_org" placeholder={{k.broj_org}}
+                                    [disabled]="tip != 'organizator'">
+                            </td>
+                            <td>{{k.status}}</td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-outline-warning  btn-xs"
+                                    (click)="azuriraj(k)">Azuriraj</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-outline-danger  btn-xs"
+                                    (click)="obrisi(k)">Obrisi</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-outline-success  btn-xs"
+                                    *ngIf="k.status=='pending'" (click)="prihvati(k)">Prihvati</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-outline-secondary  btn-xs"
+                                    *ngIf="k.status=='pending'" (click)="odbij(k)">Odbij</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <h5><i>LAZAR ERIC - PIA PROJEKAT</i></h5>
+    </div>
+</div>
+
+</html>

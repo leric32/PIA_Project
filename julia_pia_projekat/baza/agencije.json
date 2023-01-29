@@ -1,0 +1,18 @@
+[
+{
+    "idA" : 1,
+    "naziv" : "Super agenti",
+    "adresa" : "Bregalnicka 20",
+    "grad" : 1,
+    "telefon" : "011123456",
+    "PIB" : 2222
+},
+{
+    "idA" : 2,
+    "naziv" : "Cacanska agencija",
+    "adresa" : "Lomina 20",
+    "grad" : 5,
+    "telefon" : "032/111-999",
+    "PIB" : 8888
+}
+]
