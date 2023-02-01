@@ -30,9 +30,9 @@ class UserController {
             });
             var mailOptions = {
                 from: 'le_pia@outlook.com',
-                to: 'racicaleksa7@gmail.com',
+                to: 'aanamaksimovic9@gmail.com',
                 subject: 'Sending Email using Node.js',
-                text: 'Vracaj se kuci da ucis ioa'
+                text: 'Uradi bre is2 projkeat'
             };
             transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
