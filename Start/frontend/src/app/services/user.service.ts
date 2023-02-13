@@ -19,16 +19,15 @@ export class UserService {
     return this.http.post(`${this.uri}/login`, data);
   }
 
-  mail(korisnicko_ime, lozinka){
+  mail(email){
     const data={
-      korisnicko_ime: korisnicko_ime,
-      lozinka: lozinka
+      email: email
     }
-    console.log(1)
+
     return this.http.post(`${this.uri}/mail`, data);
   }
 
-  register(ime, prezime, korisnicko_ime, tip, lozinka, tel, email, no, ao, mbo, status){
+  register(ime, prezime, korisnicko_ime, tip, lozinka, tel, email, no, ao, mbo, status, image){
     const data={
       ime: ime,
       prezime: prezime,
@@ -40,7 +39,8 @@ export class UserService {
       organizacija: no,
       adresa_org: ao,
       broj_org: mbo,
-      status: status
+      status: status,
+      slika: image
     }
     console.log(data)
     return this.http.post(`${this.uri}/register`, data);
@@ -76,7 +76,7 @@ export class UserService {
     return this.http.post(`${this.uri}/delete`, data);
   }
 
-  update(ime, prezime, korisnicko_ime, tip, lozinka, tel, email, org, adr, br, rki){
+  update(ime, prezime, korisnicko_ime, tip, lozinka, tel, email, org, adr, br, rki, slika){
     const data={
       ime: ime,
       prezime: prezime,
@@ -88,7 +88,8 @@ export class UserService {
       organizacija: org,
       adresa_org: adr,
       broj_org: br,
-      rki: rki
+      rki: rki,
+      slika: slika
     }
 
     return this.http.post(`${this.uri}/update`, data);
@@ -108,6 +109,31 @@ export class UserService {
     }
 
     return this.http.post(`${this.uri}/decline`, data);
+  }
+
+  getOne(token){
+    const data={
+      token: token
+    }
+
+    return this.http.post(`${this.uri}/getOne`, data);
+  }
+
+  getOneByName(korisnicko_ime){
+    const data={
+     korisnicko_ime: korisnicko_ime
+    }
+
+    return this.http.post(`${this.uri}/getOneByName`, data);
+  }
+
+  sendCancelationEmail(naziv, email){
+    const data={
+      naziv: naziv,
+      email: email
+    }
+
+    return this.http.post(`${this.uri}/sendCancelationEmail`, data);
   }
 
 }

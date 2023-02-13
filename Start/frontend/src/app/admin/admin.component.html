@@ -9,21 +9,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 
+<div class="header">
+    <nav>
+        <a (click)="izabrao(1)">Svi korisnici</a>
+        <a (click)="izabrao(2)">Sve radionice</a>
+        <a (click)="izabrao(3)">Dodaj Organizatora/Ucesnik</a>
+        <a routerLink="" routerLinkActive="login" style="float: right;">Izloguj se</a>
+        <span style="float: right;">Admin: <b>{{ulogovan.ime}} {{ulogovan.prezime}}</b></span>
+        <img src={{ulogovan.slika}} alt="Avatar" style="float: right; width: 65px; height: auto; border-radius: 50%;" >
+    </nav>
+</div>
 <div class="container">
-    <div class="header">
-        <nav>
-            <a (click)="izabrao(1)">Svi korisnici</a>
-            <a (click)="izabrao(2)">Sve radionice</a>
-            <a routerLink="" routerLinkActive="login" style="float: right;">Izloguj se</a>
-            <span style="float: right;">ADMIN: {{ulogovan.ime}} {{ulogovan.prezime}}</span>
-        </nav>
-    </div>
+    
     <div class="content">
         <div class="row" *ngIf="kor == true">
             <div class="col-md-12 col-sm-12">
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Slika</th>
                             <th>Ime</th>
                             <th>Prezime</th>
                             <th>Korisnicko ime</th>
@@ -43,6 +47,15 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let k of korisnici">
+                            <td>
+                                <img  *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime"
+                                    src={{k.slika}} alt="Avatar"
+                                    style="float: center; width: 75px; height: auto; border-radius: 50%;">
+
+                                <input *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime"
+                                    type="file" id="image" name="image" value=""
+                                    (change)="load($event)">
+                            </td>
                             <td *ngIf="azurK == null || azurK.korisnicko_ime != k.korisnicko_ime">{{k.ime}}</td>
                             <td *ngIf="azurK != null && azurK.korisnicko_ime == k.korisnicko_ime">
                                 <input type="text" name="ime" [(ngModel)]="ime" placeholder={{k.ime}}>
@@ -115,10 +128,99 @@
                 </table>
             </div>
         </div>
+        <div class="row justify-content-center" style="margin: auto;" *ngIf="dod == true">
+            <div class="col-md-8 col-sm-12">
+                <table class="table">
+                    <tr>
+                        <td>Ime: </td>
+                        <td>
+                            <input type="text" name="ime" [(ngModel)]="ime" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Prezime: </td>
+                        <td>
+                            <input type="text" name="prezime" [(ngModel)]="prezime" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Korisnicko Ime: </td>
+                        <td>
+                            <input type="text" name="kor_ime" [(ngModel)]="kor_ime" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lozinka: </td>
+                        <td>
+                            <input type="password" name="lozinka" [(ngModel)]="lozinka" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Potvrda lozinke: </td>
+                        <td>
+                            <input type="password" name="lozinka2" [(ngModel)]="lozinka2" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kontakt telefon: </td>
+                        <td>
+                            <input type="text" name="tel" [(ngModel)]="tel" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email: </td>
+                        <td>
+                            <input type="text" name="email" [(ngModel)]="email" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            Organizator <input type="checkbox" id="org" name="org" [(ngModel)]="org">
+                        </td>
+                    </tr>
+                    <tr *ngIf="org">
+                        <td>Naziv organizacije: </td>
+                        <td>
+                            <input type="text" name="tel" [(ngModel)]="naz_org" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="org">
+                        <td>Adresa organizacije: </td>
+                        <td>
+                            <input type="text" name="email" [(ngModel)]="adr_org" required>
+                        </td>
+                    </tr>
+                    <tr *ngIf="org">
+                        <td>Maticni broj organizacije: </td>
+                        <td>
+                            <input type="number" name="email" [(ngModel)]="broj_org" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Slika: </td>
+                        <td>
+                            <input type="file" id="image" name="image" value="" (change)="load($event)">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <form>
+                                <button class="btn btn-success" (click)="register()">Registrovanje</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" *ngIf="error != null">
+                            <span style="color:red">{{error}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="footer">
-        <h5><i>LAZAR ERIC - PIA PROJEKAT</i></h5>
-    </div>
+</div>
+<div class="footer">
+    <h5><i>LAZAR ERIC - PIA PROJEKAT</i></h5>
 </div>
 
 </html>

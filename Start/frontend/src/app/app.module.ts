@@ -11,6 +11,8 @@ import { UcesnikComponent } from './ucesnik/ucesnik.component';
 import { OrganizatorComponent } from './organizator/organizator.component';
 import { AdminComponent } from './admin/admin.component';
 import { RegistartionAdminComponent } from './registartion-admin/registartion-admin.component';
+import { LoginAdminComponent } from './login-admin/login-admin.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { RegistartionAdminComponent } from './registartion-admin/registartion-ad
     UcesnikComponent,
     OrganizatorComponent,
     AdminComponent,
-    RegistartionAdminComponent
+    RegistartionAdminComponent,
+    LoginAdminComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

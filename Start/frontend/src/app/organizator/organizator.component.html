@@ -1,1 +1,178 @@
-<p>organizator works!</p>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<div class="header">
+    <nav>
+        <a (click)="izabrao(1)">Profil</a>
+        <a (click)="izabrao(2)">Dodaj Radionicu</a>
+        <a routerLink="" routerLinkActive="login" style="float: right;">Izloguj se</a>
+        <span style="float: right;">Organizator: <b>{{ulogovan.ime}} {{ulogovan.prezime}}</b></span>
+        <img src={{ulogovan.slika}} alt="Avatar" style="float: right; width: auto; height: 45px; border-radius: 50%;">
+    </nav>
+</div>
+<div class="container">
+    <div class="content">
+        <div class="row" *ngIf="rad">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 col-sm-12">
+                    <table class="table">
+                        <tr>
+                            <td>Naziv: </td>
+                            <td>
+                                <input type="text" name="naziv" [(ngModel)]="naziv">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Datum odrzavanja: </td>
+                            <td>
+                                <input type="datetime-local" name="datum" [(ngModel)]="datum">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mesto odrzavanja: </td>
+                            <td>
+                                <input type="text" name="mesto" [(ngModel)]="mesto">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Kratak opis: </td>
+                            <td>
+                                <input type="text" name="kratak_opis" [(ngModel)]="kratak_opis">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Duzi opis: </td>
+                            <td>
+                                <input type="text" name="duzi_opis" [(ngModel)]="duzi_opis">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Broj mesta: </td>
+                            <td>
+                                <input type="number" name="mesta" [(ngModel)]="mesta">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Glavna slika: </td>
+                            <td>
+                                <input type="file" id="image0" name="image0" value=""
+                                        (change)="load($event)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <form>
+                                    <button class="btn btn-success" (click)="insert()">Dodaj</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-2"></div>
+        </div>
+        <div class="row" *ngIf="sveR">
+            <div class="col-md-12 col-sm-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Glavna slika</th>
+                            <th>Naziv</th>
+                            <th>Organizator</th>
+                            <th>Mesto odrzavanja</th>
+                            <th>Kratak opis</th>
+                            <th>Duzi opis</th>
+                            <th>Datum odrzavanja</th>
+                            <th>Ukupno mesta</th>
+                            <th>Zauzetih mesta</th>
+                            <th>Status</th>
+                            <th>Azuriraj</th>
+                            <th>Prihvati Zahteve</th>
+                            <th>Otkazi</th>
+                            <th>Sacuvaj kao JSON</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let r of radionice">
+                            <td>
+                                <img  *ngIf="azurR == null || azurR.naziv != r.naziv"
+                                    src={{r.slika0}} alt="Avatar"
+                                    style="float: center; width: 75px; height: auto; border-radius: 50%;">
+
+                                <input *ngIf="azurR != null && azurR.naziv == r.naziv"
+                                    type="file" id="image" name="image" value=""
+                                    (change)="load($event)">
+                            </td>
+                            <td *ngIf="azurR == null || azurR.naziv != r.naziv">{{r.naziv}}</td>
+                            <td *ngIf="azurR != null && azurR.naziv == r.naziv">
+                                <input type="text" name="naziv" [(ngModel)]="naziv" placeholder={{r.naziv}}>
+                            </td>
+                            <td *ngIf="azurR == null || azurR.naziv != r.naziv">{{r.organizator}}</td>
+                            <td *ngIf="azurR != null && azurR.naziv == r.naziv">
+                                <input type="text" name="organizator" [(ngModel)]="organizator" placeholder={{r.organizator}}>
+                            </td>
+                            <td *ngIf="azurR == null || azurR.naziv != r.naziv">{{r.mesto}}
+                            </td>
+                            <td *ngIf="azurR != null && azurR.naziv == r.naziv">
+                                <input type="text" name="mesto" [(ngModel)]="mesto"
+                                    placeholder={{r.mesto}}>
+                            </td>
+                            <td *ngIf="azurR == null || azurR.naziv != r.naziv">{{r.kratak_opis}}</td>
+                            <td *ngIf="azurR != null && azurR.naziv == r.naziv">
+                                <input type="text" name="kratak_opis" [(ngModel)]="kratak_opis" placeholder={{r.kratak_opis}}>
+                            </td>
+                            <td *ngIf="azurR == null || azurR.naziv != r.naziv"><div class="dh">{{r.duzi_opis}}</div></td>
+                            <td *ngIf="azurR != null && azurR.naziv == r.naziv">
+                                <input type="text" name="duzi_opis" [(ngModel)]="duzi_opis" placeholder={{r.duzi_opis}}>
+                            </td>
+                            <td *ngIf="azurR == null || azurR.naziv != r.naziv">{{r.datum}}</td>
+                            <td *ngIf="azurR != null && azurR.naziv == r.naziv">
+                                <input type="datetime-local" name="datum" [(ngModel)]="datum" placeholder={{r.datum}}>
+                            </td>
+                            <td *ngIf="azurR == null || azurR.naziv != r.naziv">{{r.mesta}}
+                            </td>
+                            <td *ngIf="azurR != null && azurR.naziv == r.naziv">
+                                <input type="number" name="mesta" [(ngModel)]="mesta"
+                                    placeholder={{r.mesta}}>
+                            </td>
+                            <td *ngIf="azurR == null || azurR.naziv != r.naziv">{{r.zauzeto}}</td>
+                            <td *ngIf="azurR != null && azurR.naziv == r.naziv">
+                                <input type="number" name="zauzeto" [(ngModel)]="zauzeto"
+                                    placeholder={{r.zauzeto}}>
+                            </td>
+                            <td>{{r.status}}</td>
+                            <td *ngIf="r.organizator == ulogovan.korisnicko_ime">
+                                <button type="button" class="btn btn-secondary btn-outline-warning  btn-xs"
+                                    (click)="azuriraj(r)">Azuriraj</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-outline-success  btn-xs"
+                                    (click)="prihvati(r)">Prihvati</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-outline-danger  btn-xs"
+                                    *ngIf="r.status=='pending'" (click)="otkazi(r)">Otkazi</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-outline-secondary  btn-xs"
+                                    *ngIf="r.status=='pending'" (click)="sacuvaj(r)">Sacuvaj</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <h5><i>LAZAR ERIC - PIA PROJEKAT</i></h5>
+</div>
+
+</html>

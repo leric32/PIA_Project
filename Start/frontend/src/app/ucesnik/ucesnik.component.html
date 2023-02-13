@@ -1,1 +1,103 @@
-<p>ucesnik works!</p>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<div class="header">
+    <nav>
+        <a (click)="izabrao(1)">Profil</a>
+        <a (click)="izabrao(2)">Radionice</a>
+        <a (click)="izabrao(3)">Postani Organizator</a>
+        <a routerLink="" routerLinkActive="login" style="float: right;">Izloguj se</a>
+        <span style="float: right;">Ucesnik: <b>{{ulogovan.ime}} {{ulogovan.prezime}}</b></span>
+        <img src={{ulogovan.slika}} alt="Avatar" style="float: right; width: 65px; height: auto; border-radius: 50%;">
+    </nav>
+</div>
+<div class="container">
+    <div class="row" *ngIf="prof">
+        <div class="col-lg-6 col-sm-12 border rounded" style="margin-top: 20px;">
+            <div class="classWithPad" style="text-align: center;">
+                <h4><i>Osnovni podaci</i></h4>
+                <table class="table">
+                    <tr>
+                        <td colspan="2">
+                            <img src={{ulogovan.slika}} alt="Avatar"
+                                style="float: center; width: 150px; height: auto; border-radius: 50%;">
+
+                            <input *ngIf="azurK != null" type="file" id="image" name="image" value=""
+                                (change)="load($event)">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ime: </td>
+                        <td *ngIf="azurK == null">{{ulogovan.ime}}</td>
+                        <td *ngIf="azurK != null">
+                            <input type="text" name="ime" [(ngModel)]="ime" placeholder={{ulogovan.ime}}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Prezime: </td>
+                        <td *ngIf="azurK == null">{{ulogovan.prezime}}</td>
+                        <td *ngIf="azurK != null">
+                            <input type="text" name="prezime" [(ngModel)]="prezime" placeholder={{ulogovan.prezime}}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Korisnicko Ime: </td>
+                        <td *ngIf="azurK == null">{{ulogovan.korisnicko_ime}}</td>
+                        <td *ngIf="azurK != null">
+                            <input type="text" name="korisnicko_ime" [(ngModel)]="korisnicko_ime"
+                                placeholder={{ulogovan.korisnicko_ime}}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lozinka: </td>
+                        <td *ngIf="azurK == null">{{ulogovan.lozinka}}</td>
+                        <td *ngIf="azurK != null">
+                            <input type="text" name="lozinka" [(ngModel)]="lozinka" placeholder={{ulogovan.lozinka}}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Telefon: </td>
+                        <td *ngIf="azurK == null">{{ulogovan.tel}}</td>
+                        <td *ngIf="azurK != null">
+                            <input type="text" name="tel" [(ngModel)]="tel" placeholder={{ulogovan.tel}}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email: </td>
+                        <td *ngIf="azurK == null">{{ulogovan.email}}</td>
+                        <td *ngIf="azurK != null">
+                            <input type="text" name="email" [(ngModel)]="email" placeholder={{ulogovan.email}}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button type="button" class="btn btn-secondary btn-outline-warning  btn-xs"
+                                (click)="azuriraj()">Azuriraj</button>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-12 border rounded" style="margin-top: 20px;">
+            <div class="classWithPad" style="text-align: center;">
+                <button type="button" class="btn btn-secondary btn-outline-warning  btn-xs"
+                                (click)="hi()">hi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <h5><i>LAZAR ERIC - PIA PROJEKAT</i></h5>
+</div>
+
+</html>

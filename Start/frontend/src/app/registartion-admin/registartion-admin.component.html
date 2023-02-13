@@ -85,7 +85,7 @@
                     <tr *ngIf="adm || org">
                         <td>Slika: </td>
                         <td>
-                            <input type="file" id="image" name="image" value="">
+                            <input type="file" id="image" name="image" (change)="load($event)">
                         </td>
                     </tr>
                     <tr *ngIf="adm">
@@ -113,4 +113,5 @@
             <div class="col-md-2"></div>
         </div>
     </div>
+    <img [src]="image" class="w-100">
 </body>

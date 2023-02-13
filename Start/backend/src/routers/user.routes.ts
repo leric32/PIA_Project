@@ -35,4 +35,16 @@ userRouter.route('/decline').post(
     (req, res)=>new UserController().decline(req, res)
 )
 
+userRouter.route('/getOne').post(
+    (req, res)=>new UserController().getOne(req, res)
+)
+
+userRouter.route('/getOneByName').post(
+    (req, res)=>new UserController().getOneByName(req, res)
+)
+
+userRouter.route('/sendCancelationEmail').post(
+    (req, res)=>new UserController().sendCancelationEmail(req, res)
+)
+
 export default userRouter;

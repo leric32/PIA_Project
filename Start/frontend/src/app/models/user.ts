@@ -11,4 +11,6 @@ export class User{
     broj_org: number;
     slika: string;
     status: string;
+    token: string;
+    token_date: Date;
 }

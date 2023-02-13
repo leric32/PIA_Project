@@ -14,7 +14,9 @@ let User = new Schema({
     adresa_org:{type:String},
     broj_org:{type:String},
     slika:{type:String},
-    status:{type:String}
+    status:{type:String},
+    token:{type: String},
+    token_date: {type: Date}
 
 })
 

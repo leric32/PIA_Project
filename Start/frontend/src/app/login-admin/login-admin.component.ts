@@ -4,11 +4,11 @@ import { User } from '../models/user';
 import { UserService } from '../services/user.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-login-admin',
+  templateUrl: './login-admin.component.html',
+  styleUrls: ['./login-admin.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginAdminComponent implements OnInit {
 
   constructor(private userService:UserService,  private router:Router) { 
   }
@@ -24,20 +24,16 @@ export class LoginComponent implements OnInit {
   login(){
     this.userService.login(this.username, this.password).subscribe((user: User)=>{
       if(user){
-          localStorage.setItem('ulogovan', JSON.stringify(user));
           if(user.tip.localeCompare("admin")==0) {
-            this.error = "Admin nema pravo logovanjovanja na ovoj formi!!!";
+            localStorage.setItem('ulogovan', JSON.stringify(user));
+            this.router.navigate(["admin"]);
           }
           else{
-            if(user.tip.localeCompare("organizator")==0) this.router.navigate(["organizator"]);
-            else this.router.navigate(["ucesnik"]);
+            this.error = "Greska pri logovanju!!!";
           } 
       }
       else this.error = "Greska pri logovanju!!!";
     })
   }
-
- 
-
 
 }
