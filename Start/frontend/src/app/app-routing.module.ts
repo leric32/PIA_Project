@@ -8,6 +8,7 @@ import { RegistartionAdminComponent } from './registartion-admin/registartion-ad
 import { RegistartionComponent } from './registartion/registartion.component';
 import { UcesnikComponent } from './ucesnik/ucesnik.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { WorkshopDetailsComponent } from './workshop-details/workshop-details.component';
 
 const routes: Routes = [
   {path:"", component:LoginComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path:"organizator", component:OrganizatorComponent},
   {path:"ucesnik", component:UcesnikComponent},
   {path:"reset_password/:str", component:ResetPasswordComponent},
+  {path:"workshop_details", component:WorkshopDetailsComponent},
 ];
 
 @NgModule({

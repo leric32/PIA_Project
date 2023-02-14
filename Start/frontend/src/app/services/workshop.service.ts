@@ -55,4 +55,73 @@ export class WorkshopService {
     return this.http.post(`${this.uri}/getAllForUser`, data);
   }
 
+  getAllForUser2(k){
+    const data={
+      korisnicko_ime: k
+    }
+
+    return this.http.post(`${this.uri}/getAllForUser2`, data);
+  }
+
+  getAllForUser3(k){
+    const data={
+      korisnicko_ime: k
+    }
+
+    return this.http.post(`${this.uri}/getAllForUser3`, data);
+  }
+
+  getLikes(k){
+    const data={
+      korisnicko_ime: k
+    }
+
+    return this.http.post(`${this.uri}/getLikes`, data);
+  }
+
+  getComments(k){
+    const data={
+      korisnicko_ime: k
+    }
+
+    return this.http.post(`${this.uri}/getComments`, data);
+  }
+
+  deleteLike(ucesnik, radionica){
+    const data={
+      ucesnik: ucesnik,
+      radionica: radionica
+    }
+
+    return this.http.post(`${this.uri}/deleteLike`, data);
+  }
+
+  deleteComment(ucesnik, radionica){
+    const data={
+      ucesnik: ucesnik,
+      radionica: radionica
+    }
+
+    return this.http.post(`${this.uri}/deleteComment`, data);
+  }
+
+  updateComment(ucesnik, radionica, komentar){
+    const data={
+      ucesnik: ucesnik,
+      radionica: radionica,
+      komentar: komentar
+    }
+
+    return this.http.post(`${this.uri}/updateComment`, data);
+  }
+
+  povuciPrijavu(naziv, korisnicko_ime){
+    const data={
+      korisnicko_ime: korisnicko_ime,
+      naziv: naziv
+    }
+
+    return this.http.post(`${this.uri}/povuciPrijavu`, data);
+  }
+
 }

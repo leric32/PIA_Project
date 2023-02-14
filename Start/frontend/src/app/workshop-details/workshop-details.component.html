@@ -1,0 +1,88 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<div class="header">
+    <nav>
+        <a (click)="vrati_se()">Profil</a>
+        <a routerLink="" routerLinkActive="login" style="float: right;">Izloguj se</a>
+        <span style="float: right;">Ucesnik: <b>{{ulogovan.ime}} {{ulogovan.prezime}}</b></span>
+        <img src={{ulogovan.slika}} alt="Avatar" style="float: right; width: 65px; height: auto; border-radius: 50%;">
+    </nav>
+</div>
+<div class="container">
+    <h2 style="text-align: center;">Registartion</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <table class="table">
+                    <tr style="text-align: center;">
+                        <td colspan="2">
+                            <img src={{radionica.slika0}} alt="Avatar"
+                                    style="text-align: center; float: center; width: 150px; height: auto; border-radius: 50%;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Naziv: </td>
+                        <td>
+                            <b>{{radionica.naziv}}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Organizator radionice: </td>
+                        <td>
+                            <b>{{radionica.organizator}}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mesto odrzavanja: </td>
+                        <td>
+                            <b>{{radionica.mesto}}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Duzi opis: </td>
+                        <td>
+                            <b>{{radionica.duzi_opis}}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Datum odrzavanja: </td>
+                        <td>
+                            <b>{{radionica.datum.toString()}}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ukupan broj mesta: </td>
+                        <td>
+                            <b>{{radionica.mesta}}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Zauzetih mesta: </td>
+                        <td>
+                            <b>{{radionica.zauzeto}}</b>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-4 col-sm-12">Map</div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <h5><i>LAZAR ERIC - PIA PROJEKAT</i></h5>
+</div>
+
+</html>

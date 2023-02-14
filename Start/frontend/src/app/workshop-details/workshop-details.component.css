@@ -156,3 +156,11 @@ span {
 }
 
 .classWithPad { margin:5px; padding:5px;  text-align: center;}
+
+.container-fluid {
+    width: 100%;
+}
+.table{
+    text-align: center;
+    margin-top: 5%;
+}

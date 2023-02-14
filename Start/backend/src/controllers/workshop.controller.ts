@@ -68,9 +68,133 @@ export class WorkshopController {
 
         let korisnicko_ime = req.body.korisnicko_ime;
 
-        Workshop.find({'prihvaceni': korisnicko_ime}, (err, workshops) => {
+        Workshop.find({'prihvaceni': korisnicko_ime, 'datum': {$lt: new Date()}}, (err, workshops) => {
             if (err) console.log(err);
             else res.json(workshops)
+        })
+
+    }
+
+    getAllForUser2 = (req: express.Request, res: express.Response) => {
+
+        let korisnicko_ime = req.body.korisnicko_ime;
+
+        Workshop.find({'prihvaceni': korisnicko_ime, 'datum': {$gt: new Date()}}, (err, workshops) => {
+            if (err) console.log(err);
+            else res.json(workshops)
+        })
+
+    }
+
+    getAllForUser3 = (req: express.Request, res: express.Response) => {
+
+        let korisnicko_ime = req.body.korisnicko_ime;
+
+        Workshop.find({'datum': {$gt: new Date()}}, (err, workshops) => {
+            if (err) console.log(err);
+            else {
+                console.log(workshops)
+
+                let arr = workshops;
+                if(arr != null){
+                    for( var i = 0; i < arr.length; i++){ 
+                                   
+                        if ( arr[i].prihvaceni.includes(korisnicko_ime)) { 
+                            arr.splice(i, 1); 
+                            i--; 
+                        }
+                    }
+                }
+                console.log(workshops)
+
+                res.json(workshops)
+            }
+        })
+
+    }
+
+    getLikes = (req: express.Request, res: express.Response) => {
+
+        let korisnicko_ime = req.body.korisnicko_ime;
+
+        Like.find({'ucesnik': korisnicko_ime}, (err, likes) => {
+            if (err) console.log(err);
+            else res.json(likes)
+        })
+
+    }
+
+    getComments = (req: express.Request, res: express.Response) => {
+
+        let korisnicko_ime = req.body.korisnicko_ime;
+
+        Comment.find({'ucesnik': korisnicko_ime}, (err, likes) => {
+            if (err) console.log(err);
+            else res.json(likes)
+        })
+
+    }
+
+    deleteLike =  (req: express.Request, res: express.Response) => {
+
+        let ucesnik = req.body.ucesnik;
+        let radionica = req.body.radionica;
+
+        Like.findOneAndDelete({'ucesnik': ucesnik, 'radionica': radionica}, (err, likes) => {
+            if (err) console.log(err);
+            else res.json({ msg: 'OK' })
+        })
+
+    }
+
+    deleteComment =  (req: express.Request, res: express.Response) => {
+
+        let ucesnik = req.body.ucesnik;
+        let radionica = req.body.radionica;
+
+        Comment.findOneAndDelete({'ucesnik': ucesnik, 'radionica': radionica}, (err, likes) => {
+            if (err) console.log(err);
+            else res.json({ msg: 'OK' })
+        })
+
+    }
+
+    updateComment =  (req: express.Request, res: express.Response) => {
+
+        let ucesnik = req.body.ucesnik;
+        let radionica = req.body.radionica;
+        let komentar = req.body.komentar;
+
+        Comment.findOneAndUpdate({'ucesnik': ucesnik, 'radionica': radionica}, {$set: {'komentar': komentar}}, (err, likes) => {
+            if (err) console.log(err);
+            else res.json({ msg: 'OK' })
+        })
+
+    }
+
+    povuciPrijavu = (req: express.Request, res: express.Response) => {
+
+        let naziv = req.body.naziv;
+        let korisnicko_ime = req.body.korisnicko_ime;
+
+        Workshop.findOne({'naziv': naziv}, (err, w) => {
+            if (err) console.log(err);
+            else {
+                let arr = w.prihvaceni;
+                if(arr != null){
+                    for( var i = 0; i < arr.length; i++){ 
+                                   
+                        if ( arr[i] == korisnicko_ime) { 
+                            arr.splice(i, 1); 
+                            i--; 
+                        }
+                    }
+                }
+
+                Workshop.findOneAndUpdate({'naziv': naziv}, {$set: {'prihvaceni': arr}, $inc: {'zauzeto': -1}}, (err, w) => {
+                    res.json({ msg: 'OK' })
+                })
+            }
         })
 
     }

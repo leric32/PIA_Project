@@ -12,4 +12,5 @@ export class WorkShop{
     prihvaceni: Array<string>;
     cekaju: Array<string>;
     status: string;
+    blizu: boolean;
 }

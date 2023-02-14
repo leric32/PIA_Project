@@ -13,6 +13,7 @@ import { AdminComponent } from './admin/admin.component';
 import { RegistartionAdminComponent } from './registartion-admin/registartion-admin.component';
 import { LoginAdminComponent } from './login-admin/login-admin.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { WorkshopDetailsComponent } from './workshop-details/workshop-details.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     AdminComponent,
     RegistartionAdminComponent,
     LoginAdminComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    WorkshopDetailsComponent
   ],
   imports: [
     BrowserModule,
