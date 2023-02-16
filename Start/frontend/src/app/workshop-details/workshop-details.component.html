@@ -15,22 +15,40 @@
 
 <div class="header">
     <nav>
-        <a (click)="vrati_se()">Profil</a>
+        <span class="bi bi-arrow-left" style="height: autopx;" (click)="vrati_se()"></span>
         <a routerLink="" routerLinkActive="login" style="float: right;">Izloguj se</a>
         <span style="float: right;">Ucesnik: <b>{{ulogovan.ime}} {{ulogovan.prezime}}</b></span>
         <img src={{ulogovan.slika}} alt="Avatar" style="float: right; width: 65px; height: auto; border-radius: 50%;">
     </nav>
 </div>
 <div class="container">
-    <h2 style="text-align: center;">Registartion</h2>
+    <h2 style="text-align: center; margin-top: 10px;"><i>Detalji radionice
+            <span id="boot-icon" (click)="likCom()" class="bi bi-heart"
+                style="font-size: 22px; color: red; opacity: 0.9; -webkit-text-stroke-width: 1.9px; background-color: white;">
+                {{likNumLength}}</span>
+            <span id="boot-icon" (click)="likCom()" class="bi bi-chat-left"
+                style="font-size: 22px; color: rgb(0, 0, 0); opacity: 0.9; -webkit-text-stroke-width: 1.9px; background-color: white;">
+                {{comNumLength}}</span>
+            
+            <span id="likeCl" (click)="likeWS()" *ngIf="vecBio" class="bi bi-hand-thumbs-up" style="font-size: 30px; color: 008698;
+            opacity: 0.9; -webkit-text-stroke-width: 1.9px; background-color: inherit;"></span>
+        </i></h2>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-sm-12">
                 <table class="table">
                     <tr style="text-align: center;">
                         <td colspan="2">
+                            <span id="boot-icon" class="bi bi-geo-alt"
+                                style="font-size: 30px; color: rgb(0, 0, 0); opacity: 0.9; -webkit-text-stroke-width: 1.9px; background-color: white;"
+                                (click)="mapa()"></span>
+
                             <img src={{radionica.slika0}} alt="Avatar"
-                                    style="text-align: center; float: center; width: 150px; height: auto; border-radius: 50%;">
+                                style="text-align: center; float: center; width: 150px; height: auto; border-radius: 50%;">
+                            <span id="boot-icon" class="bi bi-chat"
+                                style="font-size: 30px; color: rgb(0, 0, 0); opacity: 0.9; -webkit-text-stroke-width: 1.9px; background-color: white;"
+                                (click)="chat()"></span>
+
                         </td>
                     </tr>
                     <tr>
@@ -75,9 +93,124 @@
                             <b>{{radionica.zauzeto}}</b>
                         </td>
                     </tr>
+                    <tr *ngIf="radionica.mesta != radionica.zauzeto && prijavljen == false">
+                        <td>Prijava: </td>
+                        <td>
+                            <button type="button" class="btn btn-secondary btn-outline-success  btn-xs"
+                                (click)="prijava()">Prijavi me</button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="radionica.mesta == radionica.zauzeto && prijavljen == false">
+                        <td>Obavesti kada se oslobodi mesto: </td>
+                        <td>
+                            <button type="button" class="btn btn-secondary btn-outline-info  btn-xs"
+                                (click)="obavesti()">Obavesti me</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            Galerija slika
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <img *ngIf="radionica.slike[imgNum]" src={{radionica.slike[imgNum]}} alt="Avatar"
+                                style="text-align: center; float: center; width: 200px; height: auto;"
+                                (click)="nextImg()">
+                        </td>
+                    </tr>
                 </table>
             </div>
-            <div class="col-md-4 col-sm-12">Map</div>
+            <div class="col-md-4 col-sm-12" *ngIf="mapaP">
+                <div class="mapouter">
+                    <div class="gmap_canvas"><iframe width="400" height="500" id="gmap_canvas" [src]='mapAdr() | convertToSpaces' frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-i.net">123movies-i.net</a><br>
+                        <style>
+                            .mapouter {
+                                position: relative;
+                                text-align: right;
+                                height: 518px;
+                                width: 400px;
+                                padding-top: 18px;
+                                border-radius: 5px;
+                                box-shadow: 5px 10px 8px #d4d4d4;
+                            }
+                        </style><a href="https://www.embedgooglemap.net">embeded map</a>
+                        <style>
+                            .gmap_canvas {
+                                overflow: hidden;
+                                background: none!important;
+                                padding-top: 18px;
+                                height: 518px;
+                                width: 400px;
+                                border-radius: 5px;
+                                box-shadow: 5px 10px 8px #d4d4d4;
+                            }
+                        </style>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12" *ngIf="chatP">Chat</div>
+            <div class="col-md-4 col-sm-12" *ngIf="likComP" style="margin-top: 18px;">
+                <table class="table">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th>
+                                Lajkovi
+                            </th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let l of likNum">
+                            <td>
+                                {{l.ucesnik}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th colspan="3">
+                                Komentari
+                            </th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ostavi komentar: </td>
+                            <td style="text-align: center;">
+                                <input type="text" [(ngModel)]="komText">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-outline-success  btn-xs"
+                                (click)="komPost()">Komentarisi</button>
+                            </td>
+                        </tr>
+                        <tr style="background-color: darkgray;">
+                            <td>Ko je komntarisao</td>
+                            <td>
+                                Datum
+                            </td>
+                            <td>
+                                Komentar
+                            </td>
+                        </tr>
+                        <tr *ngFor="let l of comNum">
+                            <td>
+                                {{l.ucesnik}}
+                            </td>
+                            <td>
+                                {{l.datum}}
+                            </td>
+                            <td>
+                                {{l.komentar}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

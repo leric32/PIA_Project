@@ -20,6 +20,7 @@ export class OrganizatorComponent implements OnInit {
 
     this.rad = false;
     this.sveR = false;
+    this.imgG = new Array(4);
 
     this.workshopService.getAll().subscribe((w: WorkShop[]) => {
       this.radionice = w;
@@ -50,22 +51,18 @@ export class OrganizatorComponent implements OnInit {
 
   radionice: WorkShop[];
   azurR: WorkShop;
-
-  readFile(file: File, subscriber: Subscriber<any>) {
-    const filereader = new FileReader();
-    filereader.readAsDataURL(file);
-    filereader.onload = () => {
-      subscriber.next(filereader.result);
-      subscriber.complete();
-    }
-  }
+  imgG: Array<string>;
 
   load($event: Event) {
     const file = ($event.target as HTMLInputElement).files[0];
-    console.log(file)
 
     const observable = new Observable((subscriber: Subscriber<any>) => {
-      this.readFile(file, subscriber);
+      const filereader = new FileReader();
+      filereader.readAsDataURL(file);
+      filereader.onload = () => {
+      subscriber.next(filereader.result);
+      subscriber.complete();
+    }
     });
 
     observable.subscribe((d) => {
@@ -87,12 +84,13 @@ export class OrganizatorComponent implements OnInit {
   }
 
   insert() {
-    this.workshopService.insert(this.naziv, this.ulogovan.korisnicko_ime, this.mesto, this.kratak_opis, this.duzi_opis, this.datum, this.mesta, this.slika).subscribe((resp) => {
+    this.workshopService.insert(this.naziv, this.ulogovan.korisnicko_ime, this.mesto, this.kratak_opis, this.duzi_opis, this.datum, this.mesta, this.slika, this.imgG, "pending").subscribe((resp) => {
       if (resp['msg'] == "OK") {
         alert("Radionica kreirana!!!")
       } else {
         alert("Radionica nije kreirana!!!")
       }
+      this.router.navigate(["organizator"]);
     })
   }
 
@@ -158,6 +156,55 @@ export class OrganizatorComponent implements OnInit {
 
     link.click()
 
+  }
+
+  getJSON($event){
+    const file = ($event.target as HTMLInputElement).files[0];
+    console.log(file)
+    const observable = new Observable((subscriber: Subscriber<any>) => {
+      const filereader = new FileReader();
+      filereader.readAsText(file)
+      filereader.onload = () => {
+      subscriber.next(filereader.result);
+      subscriber.complete();
+    }
+    });
+
+    observable.subscribe((d) => {
+      console.log(JSON.parse(d))
+      //uvezen sablon
+      let dp = JSON.parse(d);
+      this.naziv = dp['naziv']
+      this.datum = dp['datum']
+      this.mesto = dp['mesto']
+      this.kratak_opis = dp['kratak_opis']
+      this.duzi_opis = dp['duzi_opis']
+      this.mesta = dp['mesta']
+      this.slika = dp['slika0']
+    })
+  }
+
+  loadMultiple($event){
+
+    let numOfImgs = ($event.target as HTMLInputElement).files.length;
+
+    for(let i = 0; i  < numOfImgs; i++){
+      const file = ($event.target as HTMLInputElement).files[i];
+
+      const observable = new Observable((subscriber: Subscriber<any>) => {
+        const filereader = new FileReader();
+        filereader.readAsDataURL(file);
+        filereader.onload = () => {
+        subscriber.next(filereader.result);
+        subscriber.complete();
+      }
+      });
+  
+      observable.subscribe((d) => {
+        console.log(d)
+        this.imgG[i] = d;
+      })
+    }
   }
 
 }

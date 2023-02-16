@@ -23,7 +23,7 @@
         <img src={{ulogovan.slika}} alt="Avatar" style="float: right; width: 65px; height: auto; border-radius: 50%;">
     </nav>
 </div>
-<div class="container">
+<div class="container" style="margin-bottom: 30px;">
     <div class="row" *ngIf="prof">
         <div class="col-lg-6 col-sm-12 border rounded" style="margin-top: 20px;">
             <div class="classWithPad" style="text-align: center;">
@@ -256,6 +256,75 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row" *ngIf="postOrg">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 col-sm-12">
+            <table class="table">
+                <tr>
+                    <td>Naziv: </td>
+                    <td>
+                        <input type="text" name="naziv" [(ngModel)]="naziv">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Datum odrzavanja: </td>
+                    <td>
+                        <input type="datetime-local" name="datum" [(ngModel)]="datum">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mesto odrzavanja: </td>
+                    <td>
+                        <input type="text" name="mesto" [(ngModel)]="mesto">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Kratak opis: </td>
+                    <td>
+                        <input type="text" name="kratak_opis" [(ngModel)]="kratak_opis">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Duzi opis: </td>
+                    <td>
+                        <input type="text" name="duzi_opis" [(ngModel)]="duzi_opis">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Broj mesta: </td>
+                    <td>
+                        <input type="number" name="mesta" [(ngModel)]="mesta">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Glavna slika: </td>
+                    <td>
+                        <input type="file" id="image0" name="image0" value="" (change)="load($event)">
+                        <img *ngIf="slika" src={{slika}} alt="Avatar" style="float: right; width: 60px; height: auto; border-radius: 50%;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Galerija slika: </td>
+                    <td>
+                        <input type="file" multiple id="images" name="images" value="" (change)="loadMultiple($event)">
+                    </td>
+                </tr>
+                <tr *ngIf="imgG.length > 0">
+                    <td *ngFor="let i of imgG">
+                        <img *ngIf="i" src={{i}} alt="Avatar" style="width: 60px; height: auto;">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <form>
+                            <button class="btn btn-success" (click)="insert()">Dodaj</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-2"></div>
     </div>
 </div>
 <div class="footer">

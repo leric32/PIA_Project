@@ -1,4 +1,5 @@
 export class WorkShop{
+    _id : string;
     naziv: string;
     organizator: string;
     mesto: string;
@@ -13,4 +14,5 @@ export class WorkShop{
     cekaju: Array<string>;
     status: string;
     blizu: boolean;
+    tip: string;
 }

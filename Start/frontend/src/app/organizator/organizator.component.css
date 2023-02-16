@@ -99,6 +99,7 @@ span {
     min-width: 400px;
     overflow: visible;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
 }
 
 .table thead tr {
@@ -164,5 +165,5 @@ span {
 }
 
 .dh:hover {
-    overflow: visible;
+    overflow: auto;
 }

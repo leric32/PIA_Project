@@ -14,6 +14,7 @@ import { RegistartionAdminComponent } from './registartion-admin/registartion-ad
 import { LoginAdminComponent } from './login-admin/login-admin.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { WorkshopDetailsComponent } from './workshop-details/workshop-details.component';
+import { ConvertToSpacesPipe } from './convert-to-spaces.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { WorkshopDetailsComponent } from './workshop-details/workshop-details.co
     RegistartionAdminComponent,
     LoginAdminComponent,
     ResetPasswordComponent,
-    WorkshopDetailsComponent
+    WorkshopDetailsComponent,
+    ConvertToSpacesPipe
   ],
   imports: [
     BrowserModule,

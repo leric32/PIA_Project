@@ -1,8 +1,10 @@
+import { ObjectId } from 'mongodb';
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema;
 
 let Workshop = new Schema({
+    _id: {type: ObjectId},
     naziv: {type:String},
     organizator: {type:String},
     mesto: {type:String},
