@@ -1,10 +1,68 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    flex-shrink: 0;
+    flex-grow: 0;
+    background: #008698;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.btn-success {
+    background: #008698;
+    border: rgba(0, 0, 0, 0);
+}
+
+.btn-success:hover {
+    background: #009879;
+}
+
+.btn-success:visited {
+    background: #009879;
+}
+
+.content {
+    flex-shrink: 1;
+    flex-grow: 1;
+    padding: 3px 5px;
+    position: static;
+    overflow-y: auto;
+}
+
+.footer {
+    flex-shrink: 0;
+    flex-grow: 0;
+    background: #eee;
+    padding: 3px 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    text-align: center;
+}
+
+
+p {
+    font-family: Lato;
+}
+
 nav a {
     padding: 5px 10px;
     text-decoration: none;
     margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
     display: inline-block;
     background-color: #eee;
     border-radius: 4px;
+    overflow: hidden;
 }
 
 nav a:visited,
@@ -21,10 +79,91 @@ nav a.active {
     color: #039be5;
 }
 
-.container-fluid {
-    width: 100%;
+span {
+    padding: 5px 10px;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    display: inline-block;
+    background-color: #eee;
+    border-radius: 4px;
+    overflow: hidden;
 }
-.table{
+
+.table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    overflow: visible;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.table th,
+.table td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #009879;
+    border-radius: 10px;
+}
+
+.table {
     text-align: center;
     margin-top: 5%;
+}
+
+.form {
+    overflow-x: hidden;
+}
+
+.dh {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}
+
+.dh:hover {
+    overflow: auto;
 }

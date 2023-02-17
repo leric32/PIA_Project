@@ -1,10 +1,10 @@
 import * as express from 'express';
 import Workshop from '../models/workshop';
 import User from '../models/user'
-import workshop from '../models/workshop';
 import Comment from '../models/comment';
 import Like from '../models/like';
 import { ObjectId } from 'mongodb';
+import Message from '../models/message';
 
 export class WorkshopController {
 
@@ -130,6 +130,17 @@ export class WorkshopController {
         Like.find({ 'ucesnik': korisnicko_ime }, (err, likes) => {
             if (err) console.log(err);
             else res.json(likes)
+        })
+
+    }
+
+    getOneWorkshop = (req: express.Request, res: express.Response) => {
+
+        let naziv = req.body.naziv;
+
+        Workshop.findOne({ 'naziv': naziv }, (err, w) => {
+            if (err) console.log(err);
+            else res.json(w)
         })
 
     }
@@ -400,6 +411,54 @@ export class WorkshopController {
         }, (err, succ) => {
             if (err) console.log(err);
             else res.json({ msg: "OK" });
+        })
+
+    }
+
+    getWorkshopById = (req: express.Request, res: express.Response) => {
+
+        let _id = req.body._id;
+
+        let idTmp = new ObjectId(_id)
+
+        Workshop.findOne({ '_id': idTmp }, (err, ws) => {
+            if (err) console.log(err);
+            else res.json(ws);
+        })
+
+    }
+
+    getAllMessagesForUser = (req: express.Request, res: express.Response) => {
+
+        let korisnicko_ime = req.body.korisnicko_ime;
+
+        Message.find({ 'to': korisnicko_ime }, (err, m) => {
+            if (err) console.log(err);
+            else {
+                let mTmp = m;
+                Message.find({ 'from': korisnicko_ime }, (err, m2) => {
+                    if (err) console.log(err);
+                    else {
+                        let mTmp2 = m2;
+
+                        let resTmp = mTmp2.concat(mTmp);
+                        //console.log(resTmp)
+                        res.json(resTmp)
+                    }
+                })
+            }
+        })
+
+    }
+
+    sendMsg = (req: express.Request, res: express.Response) => {
+
+        let m = new Message(req.body)
+
+        m.save().then(user => {
+            res.status(200).json({ msg: 'OK' , 'mes': m});
+        }).catch(err => {
+            res.json({ msg: 'ERROR' })
         })
 
     }

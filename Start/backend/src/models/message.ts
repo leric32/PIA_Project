@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema;
@@ -8,7 +9,9 @@ let Message = new Schema({
     datum: {type:Date},
     tekst: {type:String},
     fromImg: {type:String},
-    toImg: {type:String}
+    toImg: {type:String},
+    radionica: {type:String},
+     _idR: {type: String}
 
 })
 

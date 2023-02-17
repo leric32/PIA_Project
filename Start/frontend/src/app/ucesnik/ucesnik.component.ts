@@ -7,6 +7,7 @@ import { User } from '../models/user';
 import { WorkShop } from '../models/workshop';
 import { UserService } from '../services/user.service';
 import { WorkshopService } from '../services/workshop.service';
+import { Message } from '../models/message';
 
 @Component({
   selector: 'app-ucesnik',
@@ -24,6 +25,7 @@ export class UcesnikComponent implements OnInit {
     this.org = false;
     this.radPage = false;
     this.postOrg = false;
+    this.chatP = false;
 
 
     if (JSON.parse(localStorage.getItem('azurK')) != null) {
@@ -44,6 +46,10 @@ export class UcesnikComponent implements OnInit {
     this.updCom = "";
     this.promenaKom = null;
     this.imgG = new Array(4);
+    this.chatBox = new Array(3);
+    this.chatBox[0] = null;
+    this.chatBox[1] = null;
+    this.chatBox[2] = null;
 
     this.workshopService.getAllForUser(this.ulogovan.korisnicko_ime).subscribe((w: WorkShop[]) => {
       this.mojeR = w;
@@ -51,7 +57,7 @@ export class UcesnikComponent implements OnInit {
 
     this.workshopService.getAllForUser3(this.ulogovan.korisnicko_ime).subscribe((w: WorkShop[]) => {
       this.mojeR3 = w;
-      console.log(this.mojeR3)
+      //console.log(this.mojeR3)
     })
 
     this.workshopService.getAllForUser2(this.ulogovan.korisnicko_ime).subscribe((w: WorkShop[]) => {
@@ -81,6 +87,25 @@ export class UcesnikComponent implements OnInit {
     this.workshopService.getComments(this.ulogovan.korisnicko_ime).subscribe((c: Comment[]) => {
       this.comms = c;
     })
+
+    this.workshopService.getAllMessagesForUser(this.ulogovan.korisnicko_ime).subscribe((m: Message[]) => {
+      console.log(m);
+      this.chatMes = m;
+      this.chatRad = []
+      m.forEach(mes => {
+
+        this.workshopService.getOneWorkshop(mes.radionica).subscribe((radio: WorkShop) => {
+          console.log(radio)
+          if (this.chatRad.some(radi => radi._id == radio._id) == false) {
+            this.chatRad.push(radio);
+          }
+        })
+        console.log(this.chatMes)
+      })
+      
+    })
+
+
   }
 
   ulogovan: User;
@@ -88,6 +113,7 @@ export class UcesnikComponent implements OnInit {
   org: boolean;
   radPage: boolean;
   postOrg: boolean;
+  chatP: boolean;
   azurK: User;
 
   ime: string;
@@ -122,6 +148,10 @@ export class UcesnikComponent implements OnInit {
   status: string;
   imgG: Array<string>;
 
+  //chat
+  chatRad: WorkShop[];
+  chatMes: Message[];
+
   izabrao(br) {
     if (br == 1) {
       //profile + radionice
@@ -129,24 +159,36 @@ export class UcesnikComponent implements OnInit {
       this.lik = false;
       this.radPage = false;
       this.postOrg = false;
+      this.chatP = false;
     } else if (br == 2) {
       //profile + likes
       this.prof = true;
       this.lik = true;
       this.radPage = false;
       this.postOrg = false;
+      this.chatP = false;
+      console.log(this.chatRad)
     } else if (br == 3) {
       //radionice
       this.prof = false;
       this.lik = false;
       this.radPage = true;
       this.postOrg = false;
+      this.chatP = false;
     } else if (br == 4) {
       //postani organizator
       this.prof = false;
       this.lik = false;
       this.radPage = false;
       this.postOrg = true;
+      this.chatP = false;
+    } else if (br == 5) {
+      //postani organizator
+      this.prof = false;
+      this.lik = false;
+      this.radPage = false;
+      this.postOrg = false;
+      this.chatP = true;
     }
 
   }
@@ -329,22 +371,22 @@ export class UcesnikComponent implements OnInit {
     this.router.navigate(["workshop_details"]);
   }
 
-  loadMultiple($event){
+  loadMultiple($event) {
 
     let numOfImgs = ($event.target as HTMLInputElement).files.length;
 
-    for(let i = 0; i  < numOfImgs; i++){
+    for (let i = 0; i < numOfImgs; i++) {
       const file = ($event.target as HTMLInputElement).files[i];
 
       const observable = new Observable((subscriber: Subscriber<any>) => {
         const filereader = new FileReader();
         filereader.readAsDataURL(file);
         filereader.onload = () => {
-        subscriber.next(filereader.result);
-        subscriber.complete();
-      }
+          subscriber.next(filereader.result);
+          subscriber.complete();
+        }
       });
-  
+
       observable.subscribe((d) => {
         console.log(d)
         this.imgG[i] = d;
@@ -361,6 +403,74 @@ export class UcesnikComponent implements OnInit {
       }
       this.router.navigate(["ucesnik"]);
     })
+  }
+
+  chatBox: Array<Array<Message>>;
+  textBox: string;
+
+  odabraoRad(r: WorkShop){
+
+    let i;
+
+    if(this.chatBox[0] == null){
+      i = 0;
+    }else if(this.chatBox[1] == null){
+      i = 1;
+    }else if(this.chatBox[2] == null){
+      i = 2;
+    }else {
+      i = 0;
+    }
+
+    let cet = [];
+
+    this.chatMes.forEach(cm =>{
+      if(cm._idR == r._id){
+        cet.push(cm)
+      }
+    })
+
+    console.log(cet)
+    cet.sort((a, b) => new Date(a.datum).getTime() - new Date(b.datum).getTime());
+
+    this.chatBox[i] = cet;
+
+    console.log(this.chatBox)
+
+  }
+  zatvoriBox(br){
+    this.chatBox[br] = null;
+  }
+
+  posaljiMes(i){
+
+    let from = this.ulogovan.korisnicko_ime;
+    console.log(this.chatBox[i])
+    let _idR = this.chatBox[i][0]._idR;
+
+    this.workshopService.getWorkshopById(_idR).subscribe((w: WorkShop)=>{
+      console.log(2)
+      let to = w.organizator;
+      let datum = new Date();
+      let tekst = this.textBox;
+      let fromImg = this.ulogovan.slika;
+      let radImg = w.slika0;
+      let radionica = w.naziv;
+      this.userService.getOneByName(to).subscribe((us: User)=>{
+        let toImg = us.slika;
+        console.log(3)
+        this.workshopService.sendMsg(to, from, tekst, datum, toImg, fromImg, radionica, radImg, _idR).subscribe((resp)=>{
+          if(resp['msg'] == "OK"){
+            console.log(4)
+            this.chatBox[i].push(resp['mes']);
+            this.textBox = "";
+          }
+        })
+
+      })
+
+    })
+
   }
 
 }

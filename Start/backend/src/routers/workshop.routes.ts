@@ -93,4 +93,20 @@ workshopRouter.route('/update').post(
 workshopRouter.route('/changeStatus').post(
     (req, res)=>new WorkshopController().changeStatus(req, res)
 )
+
+workshopRouter.route('/getAllMessagesForUser').post(
+    (req, res)=>new WorkshopController().getAllMessagesForUser(req, res)
+)
+
+workshopRouter.route('/getOneWorkshop').post(
+    (req, res)=>new WorkshopController().getOneWorkshop(req, res)
+)
+
+workshopRouter.route('/getWorkshopById').post(
+    (req, res)=>new WorkshopController().getWorkshopById(req, res)
+)
+
+workshopRouter.route('/sendMsg').post(
+    (req, res)=>new WorkshopController().sendMsg(req, res)
+)
 export default workshopRouter;

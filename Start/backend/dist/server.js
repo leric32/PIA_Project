@@ -11,8 +11,9 @@ const user_routes_1 = __importDefault(require("./routers/user.routes"));
 const workshop_routes_1 = __importDefault(require("./routers/workshop.routes"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
+app.use(body_parser_1.default.json({ limit: '50mb' }));
 app.use(body_parser_1.default.json());
-mongoose_1.default.connect('mongodb://localhost:27017/pia_project');
+mongoose_1.default.connect('mongodb://127.0.0.1:27017/pia_project');
 const connection = mongoose_1.default.connection;
 connection.once('open', () => {
     console.log('db connection ok');

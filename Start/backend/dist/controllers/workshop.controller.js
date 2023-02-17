@@ -9,6 +9,7 @@ const user_1 = __importDefault(require("../models/user"));
 const comment_1 = __importDefault(require("../models/comment"));
 const like_1 = __importDefault(require("../models/like"));
 const mongodb_1 = require("mongodb");
+const message_1 = __importDefault(require("../models/message"));
 class WorkshopController {
     constructor() {
         this.hi = (req, res) => {
@@ -114,6 +115,15 @@ class WorkshopController {
                     console.log(err);
                 else
                     res.json(likes);
+            });
+        };
+        this.getOneWorkshop = (req, res) => {
+            let naziv = req.body.naziv;
+            workshop_1.default.findOne({ 'naziv': naziv }, (err, w) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(w);
             });
         };
         this.getComments = (req, res) => {
@@ -340,6 +350,44 @@ class WorkshopController {
                     console.log(err);
                 else
                     res.json({ msg: "OK" });
+            });
+        };
+        this.getWorkshopById = (req, res) => {
+            let _id = req.body._id;
+            let idTmp = new mongodb_1.ObjectId(_id);
+            workshop_1.default.findOne({ '_id': idTmp }, (err, ws) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(ws);
+            });
+        };
+        this.getAllMessagesForUser = (req, res) => {
+            let korisnicko_ime = req.body.korisnicko_ime;
+            message_1.default.find({ 'to': korisnicko_ime }, (err, m) => {
+                if (err)
+                    console.log(err);
+                else {
+                    let mTmp = m;
+                    message_1.default.find({ 'from': korisnicko_ime }, (err, m2) => {
+                        if (err)
+                            console.log(err);
+                        else {
+                            let mTmp2 = m2;
+                            let resTmp = mTmp2.concat(mTmp);
+                            //console.log(resTmp)
+                            res.json(resTmp);
+                        }
+                    });
+                }
+            });
+        };
+        this.sendMsg = (req, res) => {
+            let m = new message_1.default(req.body);
+            m.save().then(user => {
+                res.status(200).json({ msg: 'OK', 'mes': m });
+            }).catch(err => {
+                res.json({ msg: 'ERROR' });
             });
         };
     }

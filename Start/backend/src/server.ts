@@ -7,9 +7,10 @@ import workshopRouter from './routers/workshop.routes';
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/pia_project');
+mongoose.connect('mongodb://127.0.0.1:27017/pia_project');
 const connection = mongoose.connection;
 connection.once('open', ()=>{
     console.log('db connection ok')

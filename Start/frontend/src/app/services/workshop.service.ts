@@ -219,4 +219,45 @@ export class WorkshopService {
     return this.http.post(`${this.uri}/changeStatus`, data);
   }
 
+  getAllMessagesForUser(korisnicko_ime){
+    const data={
+      korisnicko_ime: korisnicko_ime
+    }
+
+    return this.http.post(`${this.uri}/getAllMessagesForUser`, data);
+  }
+
+  getOneWorkshop(naziv){
+    const data={
+      naziv: naziv
+    }
+
+    return this.http.post(`${this.uri}/getOneWorkshop`, data);
+  }
+
+  getWorkshopById(id){
+    const data={
+      _id: id
+    }
+
+    return this.http.post(`${this.uri}/getWorkshopById`, data);
+  }
+
+  sendMsg(to, from, tekst, datum, toImg, fromImg, radionica, radImg, _idR){
+    const data={
+      to: to,
+      from: from,
+      tekst: tekst,
+      datum: datum, 
+      toImg: toImg,
+      fromImg: fromImg,
+      radionica: radionica,
+      radImg: radImg,
+      _idR: _idR
+    }
+
+    return this.http.post(`${this.uri}/sendMsg`, data);
+  }
+
+
 }
