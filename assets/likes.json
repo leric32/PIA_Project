@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "63e67d2016e665bcc122eed8"
+  },
+  "ucesnik": "lara",
+  "radionica": "Maca"
+},{
+  "_id": {
+    "$oid": "63eab37e16e665bcc122ef1f"
+  },
+  "ucesnik": "lara",
+  "radionica": "Maca 3"
+},{
+  "_id": {
+    "$oid": "63ed097716e665bcc122ef36"
+  },
+  "ucesnik": "jana",
+  "radionica": "Umetnost vocem"
+},{
+  "_id": {
+    "$oid": "63ed097f16e665bcc122ef37"
+  },
+  "ucesnik": "bane",
+  "radionica": "Umetnost vocem"
+},{
+  "_id": {
+    "$oid": "63ed163b8571fd94739df5be"
+  },
+  "ucesnik": "lara",
+  "radionica": "Umetnost vocem",
+  "__v": 0
+}]
