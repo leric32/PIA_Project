@@ -17,7 +17,8 @@ let Workshop = new Schema({
     slike:{type:Array},
     prihvaceni: {type: Array},
     cekaju: {type: Array},
-    status: {type: String}
+    status: {type: String},
+    brojLajkova: {type: Number}
 })
 
 export default mongoose.model('Workshop', Workshop, 'workshops');

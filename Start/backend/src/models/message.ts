@@ -11,7 +11,7 @@ let Message = new Schema({
     fromImg: {type:String},
     toImg: {type:String},
     radionica: {type:String},
-     _idR: {type: String}
+    _idR: {type: String}
 
 })
 

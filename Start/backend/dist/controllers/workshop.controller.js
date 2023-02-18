@@ -390,6 +390,43 @@ class WorkshopController {
                 res.json({ msg: 'ERROR' });
             });
         };
+        this.getActiveWorkshops = (req, res) => {
+            workshop_1.default.find({ 'status': 'aktivan' }, (err, workshops) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(workshops);
+            });
+        };
+        this.searchWorkshops = (req, res) => {
+            let naziv = req.body.naziv;
+            let mesto = req.body.mesto;
+            workshop_1.default.find({ 'naziv': naziv, 'mesto': mesto }, (err, ws) => {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(ws);
+            });
+        };
+        this.searchTopWorkshop = (req, res) => {
+            workshop_1.default.find((err, ws) => {
+                if (err)
+                    console.log(err);
+                else {
+                    let wsTmp = ws;
+                    let pTmp = [];
+                    wsTmp.forEach(w => {
+                        like_1.default.find({ 'radionica': w.naziv }, (err, ls) => {
+                            console.log(ls.length);
+                            w.brojLajkova = ls.length;
+                            pTmp.push({ 'rad': wsTmp, 'brojL': ls.leng });
+                        });
+                    });
+                    console.log(pTmp);
+                    res.json(pTmp);
+                }
+            });
+        };
     }
 }
 exports.WorkshopController = WorkshopController;

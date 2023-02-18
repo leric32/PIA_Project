@@ -259,5 +259,20 @@ export class WorkshopService {
     return this.http.post(`${this.uri}/sendMsg`, data);
   }
 
+  getActiveWorkshops(){
+    return this.http.get(`${this.uri}/getActiveWorkshops`);
+  }
 
+  searchWorkshops(naziv, mesto){
+    const data={
+      naziv: naziv,
+      mesto: mesto
+    }
+
+    return this.http.post(`${this.uri}/searchWorkshops`, data);
+  }
+
+  searchTopWorkshop(){
+    return this.http.get(`${this.uri}/searchTopWorkshop`);
+  }
 }

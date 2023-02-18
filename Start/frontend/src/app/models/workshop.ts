@@ -15,4 +15,5 @@ export class WorkShop{
     status: string;
     blizu: boolean;
     tip: string;
+    brojLajkova: number;
 }

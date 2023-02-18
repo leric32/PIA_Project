@@ -10,9 +10,9 @@
 </head>
 <div class="header">
     <nav>
-        <a routerLink="/login" routerLinkActive="active">Pocetni ekran</a>
-        <a routerLink="" routerLinkActive="login" style="float: right;">Izloguj se</a>
-        <span style="float: right;">LogIn</span>
+        <a (click)="izabrao(1)">Pocetni ekran</a>
+        <a (click)="izabrao(2)">LogIn</a>
+        <span style="float: right;">Neregistrovani korisnik</span>
     </nav>
 </div>
 <div class="container">
@@ -20,7 +20,7 @@
 
         <body>
             <div class="container-fluid">
-                <div class="row">
+                <div class="row" *ngIf="logP">
                     <div class="col-md-2"></div>
                     <div class="col-md-8 col-sm-12">
                         <table class="table">
@@ -57,7 +57,63 @@
                     </div>
                     <div class="col-md-2"></div>
                 </div>
-                <br/>
+                <div class="row">
+                    <div class="col-lg-10 col-sm-12 border rounded" style="margin-top: 20px;" *ngIf="rad">
+                        <h4 style="padding-top: 10px; white-space: nowrap;"><input type="text"
+                                style="text-align: left; width: 100px; margin-left: 20px;" placeholder="naziv..."
+                                [(ngModel)]="nazivPret">
+                            <input type="text" style="text-align: left; width: 100px; margin-left: 20px;"
+                                placeholder="mesto..." [(ngModel)]="mestoPret">
+                            <button class="btn btn-success" (click)="pretrazi()"
+                                style="margin-left: 20px;">Pretrazi</button>
+                            <i style="text-align: center; margin-left: 40px; margin-right: 50px;">Aktuelne Radionice</i>
+                            <i style="font-size: medium;">Sortiraj po: </i>
+                            <select name="sort" [(ngModel)]="sorting" (change)="sort()" style="width: 110px;">
+                                <option disabled selected value> -- select an option -- </option>
+                                <option value="naziv">Nazivu</option>
+                                <option value="datum">Datumu</option>
+                            </select>
+                        </h4>
+                        <div class="classWithPad content" style="text-align: center;">
+                            <table class="table">
+                                <thead>
+                                    <tr style="text-align: center;">
+                                        <th>Glavna slika</th>
+                                        <th>Naziv</th>
+                                        <th>Mesto odrzavanja</th>
+                                        <th>Kratak Opis</th>
+                                        <th>Datum odrzavanja</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let r of mojeR">
+                                        <td>
+                                            <img src={{r.slika0}} alt="Avatar"
+                                                style="float: center; width: 75px; height: auto; border-radius: 50%;">
+                                        </td>
+                                        <td>{{r.naziv}}</td>
+                                        <td>{{r.mesto}}</td>
+                                        <td>{{r.kratak_opis}}</td>
+                                        <td>{{r.datum}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-12 border rounded" style="margin-top: 20px; text-align: center;" *ngIf="rad">
+                        <i style="text-align: center;"><b>Top 5</b></i>
+                        <div style="text-align: center;">
+                            <table class="table" >
+                                <thead style="text-align: center; width: 30px;">
+                                    <tr style="text-align: center; width: 30px;" *ngFor="let r of top5">
+                                        <th >{{r.naziv}}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br />
 
             </div>
         </body>

@@ -20,7 +20,8 @@ let Workshop = new Schema({
     slike: { type: Array },
     prihvaceni: { type: Array },
     cekaju: { type: Array },
-    status: { type: String }
+    status: { type: String },
+    brojLajkova: { type: Number }
 });
 exports.default = mongoose_1.default.model('Workshop', Workshop, 'workshops');
 //# sourceMappingURL=workshop.js.map

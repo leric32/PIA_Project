@@ -463,4 +463,49 @@ export class WorkshopController {
 
     }
 
+    getActiveWorkshops = (req: express.Request, res: express.Response) => {
+
+        Workshop.find({ 'status': 'aktivan'}, (err, workshops) => {
+            if (err) console.log(err);
+            else res.json(workshops)
+        })
+
+    }
+
+    searchWorkshops = (req: express.Request, res: express.Response) => {
+
+        let naziv = req.body.naziv;
+        let mesto = req.body.mesto;
+
+        Workshop.find({ 'naziv': naziv, 'mesto': mesto }, (err, ws) => {
+            if (err) console.log(err);
+            else res.json(ws);
+        })
+
+    }
+
+    searchTopWorkshop = (req: express.Request, res: express.Response) => {
+
+        Workshop.find((err, ws) => {
+            if (err) console.log(err);
+            else {
+
+                let wsTmp = ws
+                let pTmp = []
+                let ind = 0;
+
+                wsTmp.forEach(w =>{
+                    Like.find({'radionica': w.naziv},(err, ls) => {
+                        console.log(ls.length)
+                        w.brojLajkova = ls.length
+                        pTmp.push({'rad': wsTmp, 'brojL': ls.leng})
+                    })
+                })
+
+                console.log(pTmp)
+            }
+        })
+
+    }
+
 }

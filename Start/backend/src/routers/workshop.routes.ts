@@ -109,4 +109,16 @@ workshopRouter.route('/getWorkshopById').post(
 workshopRouter.route('/sendMsg').post(
     (req, res)=>new WorkshopController().sendMsg(req, res)
 )
+
+workshopRouter.route('/getActiveWorkshops').get(
+    (req, res)=>new WorkshopController().getActiveWorkshops(req, res)
+)
+
+workshopRouter.route('/searchWorkshops').get(
+    (req, res)=>new WorkshopController().searchWorkshops(req, res)
+)
+
+workshopRouter.route('/searchTopWorkshop').get(
+    (req, res)=>new WorkshopController().searchTopWorkshop(req, res)
+)
 export default workshopRouter;
