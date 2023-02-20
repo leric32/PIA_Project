@@ -448,6 +448,27 @@ class WorkshopController {
                 }
             });
         };
+        this.prihvatiSve = (req, res) => {
+            let _id = req.body._idR;
+            let idTmp = new mongodb_1.ObjectId(_id);
+            workshop_1.default.findOne({ '_id': idTmp }, (err, ws) => {
+                if (err)
+                    console.log(err);
+                else {
+                    let cekaj = ws.cekaju;
+                    let prihv = ws.prihvaceni;
+                    let tmpPrihv = prihv.concat(cekaj);
+                    workshop_1.default.findOneAndUpdate({ '_id': idTmp }, {
+                        $set: {
+                            'cekaju': new Array(), 'prihvaceni': tmpPrihv,
+                            'mesta': ws.mesta - cekaj.length, 'zauzeto': ws.zauzeto + cekaj.length
+                        }
+                    }, (err, ws) => {
+                        res.json({ msg: 'OK' });
+                    });
+                }
+            });
+        };
     }
 }
 exports.WorkshopController = WorkshopController;

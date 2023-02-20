@@ -37,5 +37,6 @@ workshopRouter.route('/getActiveWorkshops').get((req, res) => new workshop_contr
 workshopRouter.route('/searchWorkshops').get((req, res) => new workshop_controller_1.WorkshopController().searchWorkshops(req, res));
 workshopRouter.route('/searchTopWorkshop').get((req, res) => new workshop_controller_1.WorkshopController().searchTopWorkshop(req, res));
 workshopRouter.route('/getAllMessagesForUserForOneWorkshop').post((req, res) => new workshop_controller_1.WorkshopController().getAllMessagesForUserForOneWorkshop(req, res));
+workshopRouter.route('/prihvatiSve').post((req, res) => new workshop_controller_1.WorkshopController().prihvatiSve(req, res));
 exports.default = workshopRouter;
 //# sourceMappingURL=workshop.routes.js.map
