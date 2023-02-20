@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscriber } from 'rxjs';
+import { Message } from '../models/message';
 import { User } from '../models/user';
 import { WorkShop } from '../models/workshop';
 import { UserService } from '../services/user.service';
@@ -20,6 +21,7 @@ export class OrganizatorComponent implements OnInit {
 
     this.rad = false;
     this.sveR = false;
+    this.svePor = true;
     this.imgG = new Array(4);
 
     this.workshopService.getAll().subscribe((w: WorkShop[]) => {
@@ -32,11 +34,36 @@ export class OrganizatorComponent implements OnInit {
     } else {
       this.azurR = null;
     }
+
+    this.chatBox = new Array(3);
+    this.chatBox[0] = null;
+    this.chatBox[1] = null;
+    this.chatBox[2] = null;
+    this.ind = false;
+
+    this.workshopService.getAllMessagesForUser(this.ulogovan.korisnicko_ime).subscribe((m: Message[]) => {
+      console.log(m);
+      this.chatMes = m;
+      this.chatRad = []
+      m.forEach(mes => {
+
+        this.workshopService.getOneWorkshop(mes.radionica).subscribe((radio: WorkShop) => {
+          console.log(radio)
+          if (this.chatRad.some(radi => radi._id == radio._id) == false) {
+            this.chatRad.push(radio);
+          }
+        })
+        console.log(this.chatMes)
+      })
+      
+    })
+
   }
 
   ulogovan: User;
   rad: boolean;
   sveR: boolean;
+  svePor: boolean;
 
   naziv: string;
   datum: Date;
@@ -76,9 +103,16 @@ export class OrganizatorComponent implements OnInit {
     if (br == 1) {
       this.rad = false;
       this.sveR = true;
+      this.svePor = false;
     } else if (br == 2) {
       this.rad = true;
       this.sveR = false;
+      this.svePor = false;
+    }else if (br == 3) {
+      this.rad = false;
+      this.sveR = false;
+      this.svePor = true;
+      this.ind = false;
     }
 
   }
@@ -205,6 +239,117 @@ export class OrganizatorComponent implements OnInit {
         this.imgG[i] = d;
       })
     }
+  }
+
+
+  chatBox: Array<Array<Message>>;
+  textBox: string;
+  chatRad: WorkShop[];
+  chatMes: Message[];
+  ucesniciBox : User[];
+  ind: boolean;
+
+  odabraoRad(r: WorkShop){
+
+    let i;
+
+    if(this.chatBox[0] == null){
+      i = 0;
+    }else if(this.chatBox[1] == null){
+      i = 1;
+    }else if(this.chatBox[2] == null){
+      i = 2;
+    }else {
+      i = 0;
+    }
+
+    let useri = [];
+
+    this.chatMes.forEach(cm =>{
+      if(cm.to != this.ulogovan.korisnicko_ime && !useri.includes(cm.to)){
+        useri.push(cm.to)
+      }
+      if(cm.from != this.ulogovan.korisnicko_ime && !useri.includes(cm.from)){
+        useri.push(cm.from)
+      }
+    })
+
+    console.log(useri)
+    this.ind = true;
+    this.ucesniciBox = useri;
+    // cet.sort((a, b) => new Date(a.datum).getTime() - new Date(b.datum).getTime());
+
+    // this.chatBox[i] = cet;
+
+    //console.log(this.chatBox)
+
+  }
+  
+  zatvoriBox(br){
+    this.chatBox[br] = null;
+  }
+
+  
+
+  posaljiMes(i){
+
+    let from = this.ulogovan.korisnicko_ime;
+    console.log(this.chatBox[i])
+    let _idR = this.chatBox[i][0]._idR;
+
+    this.workshopService.getWorkshopById(_idR).subscribe((w: WorkShop)=>{
+      console.log(2)
+      let to = w.organizator;
+      let datum = new Date();
+      let tekst = this.textBox;
+      let fromImg = this.ulogovan.slika;
+      let radImg = w.slika0;
+      let radionica = w.naziv;
+      this.userService.getOneByName(to).subscribe((us: User)=>{
+        let toImg = us.slika;
+        console.log(3)
+        this.workshopService.sendMsg(to, from, tekst, datum, toImg, fromImg, radionica, radImg, _idR).subscribe((resp)=>{
+          if(resp['msg'] == "OK"){
+            console.log(4)
+            this.chatBox[i].push(resp['mes']);
+            this.textBox = "";
+          }
+        })
+
+      })
+
+    })
+
+  }
+
+  odabraoUces(u){
+    let i;
+
+    if(this.chatBox[0] == null){
+      i = 0;
+    }else if(this.chatBox[1] == null){
+      i = 1;
+    }else if(this.chatBox[2] == null){
+      i = 2;
+    }else {
+      i = 0;
+    }
+
+    let cet = [];
+
+    this.chatMes.forEach(cm =>{
+      if((cm.from == u && cm.to == this.ulogovan.korisnicko_ime)
+          || (cm.to == u && cm.from == this.ulogovan.korisnicko_ime)){
+        cet.push(cm);
+      }
+    })
+
+    //this.ind = true;
+    cet.sort((a, b) => new Date(a.datum).getTime() - new Date(b.datum).getTime());
+
+    this.chatBox[i] = cet;
+
+    //console.log(this.chatBox)
   }
 
 }

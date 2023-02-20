@@ -11,15 +11,187 @@
 
 <div class="header">
     <nav>
-        <a (click)="izabrao(1)">Profil</a>
-        <a (click)="izabrao(2)">Dodaj Radionicu</a>
+        <a (click)="izabrao(3)">Profil</a>
+        <a (click)="izabrao(1)">Sve radionice</a>
+        <a (click)="izabrao(2)">Dodaj radionicu</a>
         <a routerLink="" routerLinkActive="login" style="float: right;">Izloguj se</a>
         <span style="float: right;">Organizator: <b>{{ulogovan.ime}} {{ulogovan.prezime}}</b></span>
         <img src={{ulogovan.slika}} alt="Avatar" style="float: right; width: auto; height: 45px; border-radius: 50%;">
     </nav>
 </div>
 <div class="container" style="margin-bottom: 30px;">
-    <div class="content">
+    
+        <div class="row" *ngIf="svePor">
+            <div class="col-lg-3">
+                <div class="card chat-app" *ngIf="ind == false">
+                    <div id="plist" class="people-list"
+                        style="margin-top: 30px; width: 250px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);">
+                        <div class="input-group">
+                            <h4>Cet po radionicama</h4>
+                        </div>
+                        <ul class="list-unstyled chat-list mt-2 mb-0">
+                            <li class="clearfix" *ngFor="let r of chatRad" (click)="odabraoRad(r)">
+                                <img src={{r.slika0}} alt="avatar">
+                                <div class="about">
+                                    <div class="name">{{r.naziv}}</div>
+                                </div>
+                            </li>
+                        </ul>
+    
+                    </div>
+    
+                </div>
+                <div class="card chat-app" *ngIf="ind">
+                    <div id="plist" class="people-list"
+                        style="margin-top: 30px; width: 250px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);">
+                        <div class="input-group">
+                            <h4>Ucesnici radionice</h4>
+                        </div>
+                        <ul class="list-unstyled chat-list mt-2 mb-0" style="text-align: center;">
+                            <li class="clearfix" *ngFor="let r of ucesniciBox"  (click)="odabraoUces(r)"  style="text-align: center;">
+                                <div class="about">
+                                    <div class="name"><h6>{{r}}</h6></div>
+                                </div>
+                            </li>
+                        </ul>
+    
+                    </div>
+    
+                </div>
+            </div>
+            <div class="col-lg-3" *ngIf="chatBox[0] != null">
+                <div class="box box-primary direct-chat direct-chat-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cet 1</h3>
+    
+                        <div class="box-tools pull-right">
+                            <button type="button" class="close" aria-label="Close" (click)="zatvoriBox(0)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+    
+                    <div class="box-body">
+    
+                        <div class="direct-chat-messages">
+    
+                            <div *ngFor="let cb of chatBox[0]" class="direct-chat-msg"
+                                [ngClass]="{'right': cb.from == ulogovan.korisnicko_ime}">
+                                <div class="direct-chat-info clearfix">
+                                    <span class="direct-chat-name pull-left"
+                                        [ngClass]="{'pull-left': cb.from != ulogovan.korisnicko_ime}"
+                                        [ngClass]="{'pull-right': cb.from == ulogovan.korisnicko_ime}">{{cb.from}}</span>
+                                </div>
+                                <img class="direct-chat-img" src={{cb.fromImg}} alt="Message User Image">
+                                <div class="direct-chat-text">
+                                    {{cb.tekst}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <form action="#" method="post">
+                            <div class="input-group">
+                                <input type="text" name="message" [(ngModel)]="textBox" placeholder="Type Message ..." class="form-control">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary btn-flat" (click)="posaljiMes(0)">Send</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.box-footer-->
+                </div>
+                <!--/.direct-chat -->
+            </div>
+            <div class="col-lg-3" *ngIf="chatBox[1] != null">
+                <div class="box box-primary direct-chat direct-chat-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cet 2</h3>
+    
+                        <div class="box-tools pull-right">
+                            <button type="button" class="close" aria-label="Close" (click)="zatvoriBox(1)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+    
+                    <div class="box-body">
+    
+                        <div class="direct-chat-messages">
+    
+                            <div *ngFor="let cb of chatBox[1]" class="direct-chat-msg"
+                                [ngClass]="{'right': cb.from == ulogovan.korisnicko_ime}">
+                                <div class="direct-chat-info clearfix">
+                                    <span class="direct-chat-name pull-left"
+                                        [ngClass]="{'pull-left': cb.from != ulogovan.korisnicko_ime}"
+                                        [ngClass]="{'pull-right': cb.from == ulogovan.korisnicko_ime}">{{cb.from}}</span>
+                                </div>
+                                <img class="direct-chat-img" src={{cb.fromImg}} alt="Message User Image">
+                                <div class="direct-chat-text">
+                                    {{cb.tekst}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="input-group">
+                            <input type="text" name="message" [(ngModel)]="textBox" placeholder="Type Message ..." class="form-control" style="height: 25px;">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary btn-flat" (click)="posaljiMes(1)">Send</button>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.box-footer-->
+                </div>
+                <!--/.direct-chat -->
+            </div>
+            <div class="col-lg-3" *ngIf="chatBox[2] != null">
+                <div class="box box-primary direct-chat direct-chat-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cet 3</h3>
+    
+                        <div class="box-tools pull-right">
+                            <button type="button" class="close" aria-label="Close" (click)="zatvoriBox(2)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+    
+                    <div class="box-body">
+    
+                        <div class="direct-chat-messages">
+    
+                            <div *ngFor="let cb of chatBox[2]" class="direct-chat-msg"
+                                [ngClass]="{'right': cb.from == ulogovan.korisnicko_ime}">
+                                <div class="direct-chat-info clearfix">
+                                    <span class="direct-chat-name pull-left"
+                                        [ngClass]="{'pull-left': cb.from != ulogovan.korisnicko_ime}"
+                                        [ngClass]="{'pull-right': cb.from == ulogovan.korisnicko_ime}">{{cb.from}}</span>
+                                </div>
+                                <img class="direct-chat-img" src={{cb.fromImg}} alt="Message User Image">
+                                <div class="direct-chat-text">
+                                    {{cb.tekst}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="input-group">
+                            <input type="text" name="message" [(ngModel)]="textBox" placeholder="Type Message ..." class="form-control" style="height: 25px;">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary btn-flat" (click)="posaljiMes(2)">Send</button>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.box-footer-->
+                </div>
+                <!--/.direct-chat -->
+            </div>
+        </div>
+
         <div class="row" *ngIf="rad">
             <div class="col-md-2"></div>
             <div class="col-md-8 col-sm-12">
@@ -95,6 +267,7 @@
             </div>
             <div class="col-md-2"></div>
         </div>
+    <div class="content">    
         <div class="row" *ngIf="sveR">
             <div class="col-md-12 col-sm-12">
                 <table class="table">
@@ -168,16 +341,16 @@
                                 </td>
                                 <td>{{r.status}}</td>
                                 <td >
-                                    <button type="button" class="btn btn-secondary btn-outline-warning  btn-xs" [disabled]="r.organizator == ulogovan.korisnicko_ime"
+                                    <button type="button" class="btn btn-secondary btn-outline-warning  btn-xs" [disabled]="r.organizator != ulogovan.korisnicko_ime"
                                         (click)="azuriraj(r)">Azuriraj</button>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-secondary btn-outline-success  btn-xs"
-                                    [disabled]="r.status=='aktivan'" (click)="prihvati(r)">Prihvati</button>
+                                    [disabled]="r.status != 'pending' || r.organizator != ulogovan.korisnicko_ime" (click)="prihvati(r)">Prihvati</button>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-secondary btn-outline-danger  btn-xs"
-                                    [disabled]="r.status=='pending'" (click)="otkazi(r)">Otkazi</button>
+                                    [disabled]="r.status != 'pending' || r.organizator != ulogovan.korisnicko_ime" (click)="otkazi(r)">Otkazi</button>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-secondary btn-outline-secondary  btn-xs"

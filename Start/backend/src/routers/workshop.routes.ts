@@ -121,4 +121,8 @@ workshopRouter.route('/searchWorkshops').get(
 workshopRouter.route('/searchTopWorkshop').get(
     (req, res)=>new WorkshopController().searchTopWorkshop(req, res)
 )
+
+workshopRouter.route('/getAllMessagesForUserForOneWorkshop').post(
+    (req, res)=>new WorkshopController().getAllMessagesForUserForOneWorkshop(req, res)
+)
 export default workshopRouter;

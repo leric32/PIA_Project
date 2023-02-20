@@ -166,7 +166,7 @@
                                 <span *ngIf="promenaKom == null || promenaKom != l">"{{l.komentar}}"" - radionica
                                     <b><i>{{l.radionica}}</i></b></span>
                                 <span *ngIf="promenaKom != null && promenaKom == l">Unesite novi komentar <input
-                                        type="text" name="updCom" id="updCom" [(ngModel)]="updCom"></span> <br>
+                                        type="text" name="updCom" id="updCom" [(ngModel)]="updCom" placeholder="{{l.komentar}}"></span> <br>
                                 <button type="button" class="btn btn-outline-warning btn-sm"
                                     style="margin-bottom: 5px; margin-right: 5px;" (click)="promeniKom(l)">Promeni
                                     Komentar</button>
@@ -204,7 +204,7 @@
         <div class="col-lg-3" *ngIf="chatBox[0] != null">
             <div class="box box-primary direct-chat direct-chat-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Chat 0</h3>
+                    <h3 class="box-title">Cet 1</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="close" aria-label="Close" (click)="zatvoriBox(0)">
@@ -249,7 +249,7 @@
         <div class="col-lg-3" *ngIf="chatBox[1] != null">
             <div class="box box-primary direct-chat direct-chat-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Chat 1</h3>
+                    <h3 class="box-title">Cet 2</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="close" aria-label="Close" (click)="zatvoriBox(1)">
@@ -282,6 +282,49 @@
                         <input type="text" name="message" [(ngModel)]="textBox" placeholder="Type Message ..." class="form-control" style="height: 25px;">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-primary btn-flat" (click)="posaljiMes(1)">Send</button>
+                        </span>
+                    </div>
+                </div>
+                <!-- /.box-footer-->
+            </div>
+            <!--/.direct-chat -->
+        </div>
+        <div class="col-lg-3" *ngIf="chatBox[2] != null">
+            <div class="box box-primary direct-chat direct-chat-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Cet 3</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="close" aria-label="Close" (click)="zatvoriBox(2)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body">
+
+                    <div class="direct-chat-messages">
+
+                        <div *ngFor="let cb of chatBox[2]" class="direct-chat-msg"
+                            [ngClass]="{'right': cb.from == ulogovan.korisnicko_ime}">
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name pull-left"
+                                    [ngClass]="{'pull-left': cb.from != ulogovan.korisnicko_ime}"
+                                    [ngClass]="{'pull-right': cb.from == ulogovan.korisnicko_ime}">{{cb.from}}</span>
+                            </div>
+                            <img class="direct-chat-img" src={{cb.fromImg}} alt="Message User Image">
+                            <div class="direct-chat-text">
+                                {{cb.tekst}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <div class="input-group">
+                        <input type="text" name="message" [(ngModel)]="textBox" placeholder="Type Message ..." class="form-control" style="height: 25px;">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-flat" (click)="posaljiMes(2)">Send</button>
                         </span>
                     </div>
                 </div>

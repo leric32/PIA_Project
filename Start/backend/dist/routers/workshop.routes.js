@@ -36,5 +36,6 @@ workshopRouter.route('/sendMsg').post((req, res) => new workshop_controller_1.Wo
 workshopRouter.route('/getActiveWorkshops').get((req, res) => new workshop_controller_1.WorkshopController().getActiveWorkshops(req, res));
 workshopRouter.route('/searchWorkshops').get((req, res) => new workshop_controller_1.WorkshopController().searchWorkshops(req, res));
 workshopRouter.route('/searchTopWorkshop').get((req, res) => new workshop_controller_1.WorkshopController().searchTopWorkshop(req, res));
+workshopRouter.route('/getAllMessagesForUserForOneWorkshop').post((req, res) => new workshop_controller_1.WorkshopController().getAllMessagesForUserForOneWorkshop(req, res));
 exports.default = workshopRouter;
 //# sourceMappingURL=workshop.routes.js.map

@@ -6,6 +6,7 @@ import { User } from '../models/user';
 import { WorkShop } from '../models/workshop';
 import { UserService } from '../services/user.service';
 import { WorkshopService } from '../services/workshop.service';
+import { Message } from '../models/message';
 
 @Component({
   selector: 'app-workshop-details',
@@ -51,6 +52,12 @@ export class WorkshopDetailsComponent implements OnInit {
     this.mapaP = true;
     this.chatP = false;
     this.likComP = false;
+
+    this.workshopService.getAllMessagesForUserForOneWorkshop(this.ulogovan.korisnicko_ime, this.radionica._id).subscribe((m: Message[])=>{
+      this.chatBox = m;
+      
+      console.log(this.chatBox)
+    })
 
     //setInterval(this.nextImg2, 1500, this);
   }
@@ -184,6 +191,35 @@ export class WorkshopDetailsComponent implements OnInit {
     let adr = this.radionica.mesto.split(' ').join('%20')
 
     return `https://maps.google.com/maps?q=${adr}&t=&z=13&ie=UTF8&iwloc=&output=embed`
+  }
+
+  textBox: string;
+  chatBox: Message[];
+
+  posaljiMes(){
+    let from = this.ulogovan.korisnicko_ime;
+    let _idR = this.radionica._id;
+
+    this.workshopService.getWorkshopById(_idR).subscribe((w: WorkShop)=>{
+      let to = w.organizator;
+      let datum = new Date();
+      let tekst = this.textBox;
+      let fromImg = this.ulogovan.slika;
+      let radImg = w.slika0;
+      let radionica = w.naziv;
+      this.userService.getOneByName(to).subscribe((us: User)=>{
+        let toImg = us.slika;
+        this.workshopService.sendMsg(to, from, tekst, datum, toImg, fromImg, radionica, radImg, _idR).subscribe((resp)=>{
+          if(resp['msg'] == "OK"){
+            console.log(this.chatBox)
+            this.chatBox.push(resp['mes']);
+            this.textBox = "";
+          }
+        })
+
+      })
+
+    })
   }
 
 }

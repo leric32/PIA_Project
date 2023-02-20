@@ -502,7 +502,30 @@ export class WorkshopController {
                     })
                 })
 
-                console.log(pTmp)
+                //console.log(pTmp)
+            }
+        })
+
+    }
+
+    getAllMessagesForUserForOneWorkshop =  (req: express.Request, res: express.Response) => {
+
+        let korisnicko_ime = req.body.korisnicko_ime;
+        let _idR = req.body._idR;
+
+        Message.find({ 'to': korisnicko_ime, '_idR': _idR }, (err, m) => {
+            if (err) console.log(err);
+            else {
+                let mTmp = m;
+                Message.find({ 'from': korisnicko_ime,'_idR': _idR  }, (err, m2) => {
+                    if (err) console.log(err);
+                    else {
+                        let mTmp2 = m2;
+                        let resTmp = mTmp2.concat(mTmp);
+                        // console.log(resTmp)
+                        res.json(resTmp)
+                    }
+                })
             }
         })
 

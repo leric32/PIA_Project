@@ -415,6 +415,7 @@ class WorkshopController {
                 else {
                     let wsTmp = ws;
                     let pTmp = [];
+                    let ind = 0;
                     wsTmp.forEach(w => {
                         like_1.default.find({ 'radionica': w.naziv }, (err, ls) => {
                             console.log(ls.length);
@@ -422,8 +423,28 @@ class WorkshopController {
                             pTmp.push({ 'rad': wsTmp, 'brojL': ls.leng });
                         });
                     });
-                    console.log(pTmp);
-                    res.json(pTmp);
+                    //console.log(pTmp)
+                }
+            });
+        };
+        this.getAllMessagesForUserForOneWorkshop = (req, res) => {
+            let korisnicko_ime = req.body.korisnicko_ime;
+            let _idR = req.body._idR;
+            message_1.default.find({ 'to': korisnicko_ime, '_idR': _idR }, (err, m) => {
+                if (err)
+                    console.log(err);
+                else {
+                    let mTmp = m;
+                    message_1.default.find({ 'from': korisnicko_ime, '_idR': _idR }, (err, m2) => {
+                        if (err)
+                            console.log(err);
+                        else {
+                            let mTmp2 = m2;
+                            let resTmp = mTmp2.concat(mTmp);
+                            // console.log(resTmp)
+                            res.json(resTmp);
+                        }
+                    });
                 }
             });
         };

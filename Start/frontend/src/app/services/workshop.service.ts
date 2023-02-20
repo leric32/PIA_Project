@@ -275,4 +275,13 @@ export class WorkshopService {
   searchTopWorkshop(){
     return this.http.get(`${this.uri}/searchTopWorkshop`);
   }
+  
+  getAllMessagesForUserForOneWorkshop(korisnicko_ime, _idR){
+    const data={
+      korisnicko_ime: korisnicko_ime,
+      _idR: _idR
+    }
+
+    return this.http.post(`${this.uri}/getAllMessagesForUserForOneWorkshop`, data);
+  }
 }

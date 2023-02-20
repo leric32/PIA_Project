@@ -21,7 +21,7 @@ export class UcesnikComponent implements OnInit {
   ngOnInit(): void {
     this.ulogovan = JSON.parse(localStorage.getItem("ulogovan"));
 
-    this.prof = false;
+    this.prof = true;
     this.org = false;
     this.radPage = false;
     this.postOrg = false;
@@ -438,6 +438,7 @@ export class UcesnikComponent implements OnInit {
     console.log(this.chatBox)
 
   }
+  
   zatvoriBox(br){
     this.chatBox[br] = null;
   }
